@@ -52,7 +52,7 @@
                 android:layout_below="@id/usernameWrapper"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/sing_in"
+                app:layout_constraintBottom_toTopOf="@+id/sign_in"
                 app:layout_constraintTop_toBottomOf="@+id/usernameWrapper">
 
                 <EditText
@@ -65,25 +65,26 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/sing_in"
+                android:id="@+id/sign_in"
                 android:onClick="signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/button_sing_in"
+                android:text="@string/button_sign_in"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
-                android:id="@+id/sing_out"
+                android:id="@+id/sign_up"
+                android:onClick="singUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:text="@string/button_sing_out"
+                android:text="@string/button_sign_up"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

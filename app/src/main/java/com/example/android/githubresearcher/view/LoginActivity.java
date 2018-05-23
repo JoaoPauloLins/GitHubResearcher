@@ -1,5 +1,7 @@
 package com.example.android.githubresearcher.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,5 +68,11 @@ public class LoginActivity extends AppCompatActivity {
                             +"Name: "+userPojo.getName()+"\n\n\n"
                             +"Location: "+userPojo.getLocation());
                 });
+    }
+
+    public void singUp(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://github.com/join?source=header-home"));
+        startActivity(intent);
     }
 }
