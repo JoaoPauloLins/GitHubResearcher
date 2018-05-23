@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class UserPojo {
-
     @SerializedName("login")
     @Expose
     private String login;
@@ -58,7 +57,7 @@ public class UserPojo {
     private Boolean siteAdmin;
     @SerializedName("name")
     @Expose
-    private String name;
+    private Object name;
     @SerializedName("company")
     @Expose
     private Object company;
@@ -70,13 +69,13 @@ public class UserPojo {
     private Object location;
     @SerializedName("email")
     @Expose
-    private Object email;
+    private String email;
     @SerializedName("hireable")
     @Expose
     private Object hireable;
     @SerializedName("bio")
     @Expose
-    private String bio;
+    private Object bio;
     @SerializedName("public_repos")
     @Expose
     private Integer publicRepos;
@@ -95,6 +94,27 @@ public class UserPojo {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("private_gists")
+    @Expose
+    private Integer privateGists;
+    @SerializedName("total_private_repos")
+    @Expose
+    private Integer totalPrivateRepos;
+    @SerializedName("owned_private_repos")
+    @Expose
+    private Integer ownedPrivateRepos;
+    @SerializedName("disk_usage")
+    @Expose
+    private Integer diskUsage;
+    @SerializedName("collaborators")
+    @Expose
+    private Integer collaborators;
+    @SerializedName("two_factor_authentication")
+    @Expose
+    private Boolean twoFactorAuthentication;
+    @SerializedName("plan")
+    @Expose
+    private PlanPojo plan;
 
     public String getLogin() {
         return login;
@@ -232,11 +252,11 @@ public class UserPojo {
         this.siteAdmin = siteAdmin;
     }
 
-    public String getName() {
+    public Object getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Object name) {
         this.name = name;
     }
 
@@ -264,11 +284,11 @@ public class UserPojo {
         this.location = location;
     }
 
-    public Object getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Object email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -280,11 +300,11 @@ public class UserPojo {
         this.hireable = hireable;
     }
 
-    public String getBio() {
+    public Object getBio() {
         return bio;
     }
 
-    public void setBio(String bio) {
+    public void setBio(Object bio) {
         this.bio = bio;
     }
 
@@ -334,5 +354,61 @@ public class UserPojo {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getPrivateGists() {
+        return privateGists;
+    }
+
+    public void setPrivateGists(Integer privateGists) {
+        this.privateGists = privateGists;
+    }
+
+    public Integer getTotalPrivateRepos() {
+        return totalPrivateRepos;
+    }
+
+    public void setTotalPrivateRepos(Integer totalPrivateRepos) {
+        this.totalPrivateRepos = totalPrivateRepos;
+    }
+
+    public Integer getOwnedPrivateRepos() {
+        return ownedPrivateRepos;
+    }
+
+    public void setOwnedPrivateRepos(Integer ownedPrivateRepos) {
+        this.ownedPrivateRepos = ownedPrivateRepos;
+    }
+
+    public Integer getDiskUsage() {
+        return diskUsage;
+    }
+
+    public void setDiskUsage(Integer diskUsage) {
+        this.diskUsage = diskUsage;
+    }
+
+    public Integer getCollaborators() {
+        return collaborators;
+    }
+
+    public void setCollaborators(Integer collaborators) {
+        this.collaborators = collaborators;
+    }
+
+    public Boolean getTwoFactorAuthentication() {
+        return twoFactorAuthentication;
+    }
+
+    public void setTwoFactorAuthentication(Boolean twoFactorAuthentication) {
+        this.twoFactorAuthentication = twoFactorAuthentication;
+    }
+
+    public PlanPojo getPlan() {
+        return plan;
+    }
+
+    public void setPlan(PlanPojo plan) {
+        this.plan = plan;
     }
 }

@@ -1,7 +1,10 @@
 package com.example.android.githubresearcher.view;
 
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.githubresearcher.R;
@@ -17,7 +20,19 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
+
+    @BindView(R.id.usernameWrapper)
+    TextInputLayout usernameWrapper;
+
+    @BindView(R.id.passwordWrapper)
+    TextInputLayout passwordWrapper;
+
+    @BindView(R.id.username)
+    EditText username;
+
+    @BindView(R.id.password)
+    EditText password;
 
     @BindView(R.id.user)
     TextView user;
@@ -25,24 +40,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        usernameWrapper.setHint("Username or email address");
+        passwordWrapper.setHint("Password");
+    }
+
+    public void signIn(View view) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
+                .baseUrl("http://git-researcher-api.herokuapp.com/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         GitHubService gitHubService = retrofit.create(GitHubService.class);
-        Observable<UserPojo> userPojoObservable = gitHubService.getUser("leopoldomt");
+        Observable<UserPojo> userPojoObservable = gitHubService.getUser(
+                this.username.getText().toString(),
+                this.password.getText().toString());
 
         userPojoObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPojo -> {
                     user.setText("Login: "+userPojo.getLogin()+"\n\n\n"
-                    +"Name: "+userPojo.getName()+"\n\n\n"
-                    +"Location: "+userPojo.getLocation());
+                            +"Name: "+userPojo.getName()+"\n\n\n"
+                            +"Location: "+userPojo.getLocation());
                 });
     }
 }
