@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GitHubResearcher</string>
+    <string name="hint_username">Username or email address</string>
+    <string name="hint_password">Password</string>
+    <string name="button_sing_in">Sing in</string>
+    <string name="button_sing_out">Sing out</string>
 </resources>
