@@ -36,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.password)
     EditText password;
 
-    @BindView(R.id.user)
-    TextView user;
+    @BindView(R.id.description)
+    TextView description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,27 +47,17 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameWrapper.setHint("Username or email address");
         passwordWrapper.setHint("Password");
+
+        description.setText(
+                new StringBuilder()
+                .append("Find users or organizations from GitHub;\n")
+                .append("Explore their public repositories;\n")
+                .append("Quickly edit yours repositories markdown and easily commit.")
+        );
     }
 
     public void signIn(View view) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://git-researcher-api.herokuapp.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        GitHubService gitHubService = retrofit.create(GitHubService.class);
-        Observable<UserPojo> userPojoObservable = gitHubService.getUser(
-                this.username.getText().toString(),
-                this.password.getText().toString());
-
-        userPojoObservable.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userPojo -> {
-                    user.setText("Login: "+userPojo.getLogin()+"\n\n\n"
-                            +"Name: "+userPojo.getName()+"\n\n\n"
-                            +"Location: "+userPojo.getLocation());
-                });
+        // TODO: Ir para a tela de Menu, já com o usuário logado.
     }
 
     public void singUp(View view) {
