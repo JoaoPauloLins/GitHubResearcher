@@ -1,7 +1,5 @@
 package com.example.android.githubresearcher.view;
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TextInputLayout;
@@ -10,12 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.githubresearcher.R;
-import com.example.android.githubresearcher.model.repository.entities.UserEntity;
-import com.example.android.githubresearcher.model.service.GitHubService;
-import com.example.android.githubresearcher.model.service.pojo.UserPojo;
-import com.example.android.githubresearcher.viewmodel.UserViewModel;
+import com.example.android.githubresearcher.repository.service.GitHubService;
+import com.example.android.githubresearcher.repository.service.pojo.UserPojo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.description)
     TextView description;
 
+    String mensagem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +60,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signIn(View view) {
-        // TODO: Ir para a tela de Menu, já com o usuário logado.
-
-        final UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://git-researcher-api.herokuapp.com/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -79,15 +74,23 @@ public class LoginActivity extends AppCompatActivity {
         userPojoObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userPojo -> {
-                    UserEntity userEntity = new UserEntity(userPojo);
-                    userViewModel.setUser(userEntity);
+                    if(userPojo.getName() != null) {
+                        Intent intent = new Intent(this, MenuActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putString("AVATAR", userPojo.getAvatarUrl());
+                        extras.putString("NOME", (String) userPojo.getName());
+                        extras.putString("LOGIN", userPojo.getLogin());
+                        extras.putString("BIO", (String) userPojo.getBio());
+                        intent.putExtras(extras);
+                        startActivity(intent);
+                    } else {
+                        mensagem = "Usuário/Senha inválidos";
+                    }
+                    Toast.makeText(this.getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
                 });
-
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
     }
 
-    public void singUp(View view) {
+    public void signUp(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://github.com/join?source=header-home"));
         startActivity(intent);

@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="200dp"
+        app:cardBackgroundColor="@android:color/white">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/nomeUser"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="25dp"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/loginUser"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="50dp"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/bioUser"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="80dp"
+            android:text="TextView" />
+
+        <ImageView
+            android:id="@+id/imageUser"
+            android:layout_width="170dp"
+            android:layout_height="160dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@android:color/holo_blue_dark" />
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
