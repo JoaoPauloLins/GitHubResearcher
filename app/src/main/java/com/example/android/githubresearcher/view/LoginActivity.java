@@ -1,5 +1,7 @@
 package com.example.android.githubresearcher.view;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TextInputLayout;
@@ -10,8 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.githubresearcher.R;
-import com.example.android.githubresearcher.repository.service.GitHubService;
-import com.example.android.githubresearcher.repository.service.pojo.UserPojo;
+import com.example.android.githubresearcher.model.repository.entities.UserEntity;
+import com.example.android.githubresearcher.model.service.GitHubService;
+import com.example.android.githubresearcher.model.service.pojo.UserPojo;
+import com.example.android.githubresearcher.viewmodel.UserViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +62,29 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signIn(View view) {
         // TODO: Ir para a tela de Menu, já com o usuário logado.
+
+        final UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://git-researcher-api.herokuapp.com/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GitHubService gitHubService = retrofit.create(GitHubService.class);
+        Observable<UserPojo> userPojoObservable = gitHubService.getUser(
+                this.username.getText().toString(),
+                this.password.getText().toString());
+
+        userPojoObservable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userPojo -> {
+                    UserEntity userEntity = new UserEntity(userPojo);
+                    userViewModel.setUser(userEntity);
+                });
+
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
     }
 
     public void singUp(View view) {

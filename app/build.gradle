@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -61,4 +64,7 @@ dependencies {
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
     // okhttp3
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    // room
+    implementation 'android.arch.persistence.room:runtime:1.1.0'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.0'
 }
