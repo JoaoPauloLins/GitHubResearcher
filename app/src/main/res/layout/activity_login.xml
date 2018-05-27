@@ -90,25 +90,30 @@
 
             <Button
                 android:id="@+id/sign_in"
-                android:onClick="signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:background="@drawable/button_bg_rounded_corners"
+                android:onClick="signIn"
                 android:text="@string/button_sign_in"
+                android:textColor="#fff"
+                android:elevation="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/sign_up"
-                android:onClick="singUp"
+                android:onClick="signUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:text="@string/button_sign_up"
+                android:background="@drawable/button_bg_rounded_corners"
+                android:textColor="#fff"
+                android:elevation="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

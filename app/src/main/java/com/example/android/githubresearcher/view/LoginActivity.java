@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.githubresearcher.R;
 import com.example.android.githubresearcher.repository.service.GitHubService;
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.description)
     TextView description;
 
+    String mensagem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +60,37 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signIn(View view) {
-        // TODO: Ir para a tela de Menu, já com o usuário logado.
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://git-researcher-api.herokuapp.com/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GitHubService gitHubService = retrofit.create(GitHubService.class);
+        Observable<UserPojo> userPojoObservable = gitHubService.getUser(
+                this.username.getText().toString(),
+                this.password.getText().toString());
+
+        userPojoObservable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userPojo -> {
+                    if(userPojo.getName() != null) {
+                        Intent intent = new Intent(this, MenuActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putString("AVATAR", userPojo.getAvatarUrl());
+                        extras.putString("NOME", (String) userPojo.getName());
+                        extras.putString("LOGIN", userPojo.getLogin());
+                        extras.putString("BIO", (String) userPojo.getBio());
+                        intent.putExtras(extras);
+                        startActivity(intent);
+                    } else {
+                        mensagem = "Usuário/Senha inválidos";
+                    }
+                    Toast.makeText(this.getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
+                });
     }
 
-    public void singUp(View view) {
+    public void signUp(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://github.com/join?source=header-home"));
         startActivity(intent);
