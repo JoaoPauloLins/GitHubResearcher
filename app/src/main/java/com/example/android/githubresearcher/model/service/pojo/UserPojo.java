@@ -1,9 +1,10 @@
-package com.example.android.githubresearcher.repository.service.pojo;
+package com.example.android.githubresearcher.model.service.pojo;
 
+import com.example.android.githubresearcher.model.User;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserPojo {
+public class UserPojo implements User{
     @SerializedName("login")
     @Expose
     private String login;
@@ -116,6 +117,7 @@ public class UserPojo {
     @Expose
     private PlanPojo plan;
 
+    @Override
     public String getLogin() {
         return login;
     }
@@ -124,7 +126,8 @@ public class UserPojo {
         this.login = login;
     }
 
-    public Integer getId() {
+    @Override
+    public int getId() {
         return id;
     }
 
@@ -132,6 +135,7 @@ public class UserPojo {
         this.id = id;
     }
 
+    @Override
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -212,6 +216,7 @@ public class UserPojo {
         this.organizationsUrl = organizationsUrl;
     }
 
+    @Override
     public String getReposUrl() {
         return reposUrl;
     }
@@ -252,8 +257,9 @@ public class UserPojo {
         this.siteAdmin = siteAdmin;
     }
 
-    public Object getName() {
-        return name;
+    @Override
+    public String getName() {
+        return name.toString();
     }
 
     public void setName(Object name) {
@@ -276,8 +282,9 @@ public class UserPojo {
         this.blog = blog;
     }
 
-    public Object getLocation() {
-        return location;
+    @Override
+    public String getLocation() {
+        return location.toString();
     }
 
     public void setLocation(Object location) {

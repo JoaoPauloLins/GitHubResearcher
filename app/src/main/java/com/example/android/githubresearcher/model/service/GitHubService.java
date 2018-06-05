@@ -1,6 +1,6 @@
-package com.example.android.githubresearcher.repository.service;
+package com.example.android.githubresearcher.model.service;
 
-import com.example.android.githubresearcher.repository.service.pojo.UserPojo;
+import com.example.android.githubresearcher.model.service.pojo.UserPojo;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

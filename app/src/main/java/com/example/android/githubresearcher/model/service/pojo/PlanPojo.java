@@ -1,4 +1,4 @@
-package com.example.android.githubresearcher.repository.service.pojo;
+package com.example.android.githubresearcher.model.service.pojo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
