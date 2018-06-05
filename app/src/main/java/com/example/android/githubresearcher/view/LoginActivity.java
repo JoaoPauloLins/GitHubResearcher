@@ -11,8 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.githubresearcher.R;
-import com.example.android.githubresearcher.repository.service.GitHubService;
-import com.example.android.githubresearcher.repository.service.pojo.UserPojo;
+import com.example.android.githubresearcher.model.service.GitHubService;
+import com.example.android.githubresearcher.model.service.pojo.UserPojo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
