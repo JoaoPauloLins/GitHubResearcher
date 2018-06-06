@@ -3,7 +3,9 @@ package com.example.android.githubresearcher.model.service.pojo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PlanPojo {
+import java.io.Serializable;
+
+public class PlanPojo implements Serializable {
     @SerializedName("name")
     @Expose
     private String name;

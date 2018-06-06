@@ -5,4 +5,9 @@
     <string name="button_sign_in">Sign in</string>
     <string name="button_sign_up">Sign up</string>
     <string name="logo">GitHub Researcher Logo</string>
+    <string name="photo">Photo</string>
+    <string name="action_settings">Settings</string>
+    <string name="tab_text_1">Repositories</string>
+    <string name="tab_text_2">Search</string>
+    <string name="tab_text_3">List</string>
 </resources>

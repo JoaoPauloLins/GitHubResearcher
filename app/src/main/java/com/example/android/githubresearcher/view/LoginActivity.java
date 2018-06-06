@@ -76,12 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 .subscribe(userPojo -> {
                     if(userPojo.getName() != null) {
                         Intent intent = new Intent(this, MenuActivity.class);
-                        Bundle extras = new Bundle();
-                        extras.putString("AVATAR", userPojo.getAvatarUrl());
-                        extras.putString("NOME", (String) userPojo.getName());
-                        extras.putString("LOGIN", userPojo.getLogin());
-                        extras.putString("BIO", (String) userPojo.getBio());
-                        intent.putExtras(extras);
+                        intent.putExtra("UserPojo", userPojo);
                         startActivity(intent);
                     } else {
                         mensagem = "Usuário/Senha inválidos";

@@ -4,7 +4,9 @@ import com.example.android.githubresearcher.model.User;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserPojo implements User{
+import java.io.Serializable;
+
+public class UserPojo implements User, Serializable{
     @SerializedName("login")
     @Expose
     private String login;
