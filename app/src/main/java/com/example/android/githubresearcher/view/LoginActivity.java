@@ -25,10 +25,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.usernameWrapper)
+    @BindView(R.id.username_wrapper)
     TextInputLayout usernameWrapper;
 
-    @BindView(R.id.passwordWrapper)
+    @BindView(R.id.password_wrapper)
     TextInputLayout passwordWrapper;
 
     @BindView(R.id.username)
