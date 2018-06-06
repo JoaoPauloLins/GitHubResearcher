@@ -12,4 +12,6 @@
     <string name="tab_text_3">List</string>
     <string name="hint_search">Users or organizations</string>
     <string name="button_search">Search</string>
+    <string name="hint_list">New list name</string>
+    <string name="button_list">Add new list</string>
 </resources>
