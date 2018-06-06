@@ -309,8 +309,8 @@ public class UserPojo implements User, Serializable{
         this.hireable = hireable;
     }
 
-    public Object getBio() {
-        return bio;
+    public String getBio() {
+        return bio.toString();
     }
 
     public void setBio(Object bio) {

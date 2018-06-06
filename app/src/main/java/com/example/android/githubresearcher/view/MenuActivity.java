@@ -28,6 +28,8 @@ public class MenuActivity extends AppCompatActivity {
     @BindView(R.id.tabs)
     TabLayout tabLayout;
 
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,16 +41,11 @@ public class MenuActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        Bundle bundle = new Bundle();
-        bundle.putString("AVATAR", userPojo.getAvatarUrl());
-        bundle.putString("NOME", (String) userPojo.getName());
-        bundle.putString("LOGIN", userPojo.getLogin());
-        bundle.putString("BIO", (String) userPojo.getBio());
-        mSectionsPagerAdapter.getItem(0).setArguments(bundle);
+        setDataRepositoriesFragment(userPojo);
     }
 
     @Override
@@ -71,6 +68,15 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setDataRepositoriesFragment(UserPojo userPojo) {
+        Bundle bundle = new Bundle();
+        bundle.putString("AVATAR", userPojo.getAvatarUrl());
+        bundle.putString("NOME", userPojo.getName());
+        bundle.putString("LOGIN", userPojo.getLogin());
+        bundle.putString("BIO", userPojo.getBio());
+        mSectionsPagerAdapter.getItem(0).setArguments(bundle);
     }
 
     /**
