@@ -33,10 +33,10 @@ public class UserEntity implements User{
     public UserEntity(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
-        this.name = user.getName();
+        this.name = (String) user.getName();
         this.avatarUrl = user.getAvatarUrl();
         this.reposUrl = user.getReposUrl();
-        this.location = user.getLocation();
+        this.location = (String) user.getLocation();
     }
 
     @Override

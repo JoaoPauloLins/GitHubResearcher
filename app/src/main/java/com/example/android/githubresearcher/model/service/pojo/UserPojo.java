@@ -260,9 +260,7 @@ public class UserPojo implements User, Serializable{
     }
 
     @Override
-    public String getName() {
-        return name.toString();
-    }
+    public Object getName() { return name; }
 
     public void setName(Object name) {
         this.name = name;
@@ -285,9 +283,7 @@ public class UserPojo implements User, Serializable{
     }
 
     @Override
-    public String getLocation() {
-        return location.toString();
-    }
+    public Object getLocation() { return location; }
 
     public void setLocation(Object location) {
         this.location = location;
@@ -309,9 +305,7 @@ public class UserPojo implements User, Serializable{
         this.hireable = hireable;
     }
 
-    public String getBio() {
-        return bio.toString();
-    }
+    public Object getBio() { return bio; }
 
     public void setBio(Object bio) {
         this.bio = bio;

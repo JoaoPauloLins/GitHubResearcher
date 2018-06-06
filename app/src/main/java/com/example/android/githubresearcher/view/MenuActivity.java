@@ -73,9 +73,9 @@ public class MenuActivity extends AppCompatActivity {
     private void setDataRepositoriesFragment(UserPojo userPojo) {
         Bundle bundle = new Bundle();
         bundle.putString("AVATAR", userPojo.getAvatarUrl());
-        bundle.putString("NOME", userPojo.getName());
+        bundle.putString("NOME", (String) userPojo.getName());
         bundle.putString("LOGIN", userPojo.getLogin());
-        bundle.putString("BIO", userPojo.getBio());
+        bundle.putString("BIO", (String) userPojo.getBio());
         mSectionsPagerAdapter.getItem(0).setArguments(bundle);
     }
 
