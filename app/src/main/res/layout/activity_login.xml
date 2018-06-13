@@ -96,7 +96,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/button_bg_rounded_corners"
-                android:onClick="signIn"
                 android:text="@string/button_sign_in"
                 android:textColor="@color/buttonText"
                 android:elevation="10dp"
@@ -105,7 +104,6 @@
 
             <Button
                 android:id="@+id/sign_up"
-                android:onClick="signUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"

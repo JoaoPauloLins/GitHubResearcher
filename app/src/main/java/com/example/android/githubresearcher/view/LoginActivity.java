@@ -1,5 +1,7 @@
 package com.example.android.githubresearcher.view;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TextInputLayout;
@@ -8,20 +10,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.githubresearcher.R;
-import com.example.android.githubresearcher.model.service.GitHubService;
-import com.example.android.githubresearcher.model.service.pojo.UserPojo;
+import com.example.android.githubresearcher.viewmodel.UserViewModel;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +37,10 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.description)
     TextView description;
 
-    String mensagem;
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,34 +57,18 @@ public class LoginActivity extends AppCompatActivity {
                 .append("Explore their public repositories;\n")
                 .append("Quickly edit yours repositories markdown and easily commit.")
         );
+
+        userViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel.class);
     }
 
+    @OnClick(R.id.sign_in)
     public void signIn(View view) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://git-researcher-api.herokuapp.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        GitHubService gitHubService = retrofit.create(GitHubService.class);
-        Observable<UserPojo> userPojoObservable = gitHubService.getUser(
-                this.username.getText().toString(),
-                this.password.getText().toString());
-
-        userPojoObservable.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userPojo -> {
-                    if(userPojo.getName() != null) {
-                        Intent intent = new Intent(this, MenuActivity.class);
-                        intent.putExtra("UserPojo", userPojo);
-                        startActivity(intent);
-                    } else {
-                        mensagem = "Usuário/Senha inválidos";
-                    }
-                    Toast.makeText(this.getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
-                });
+        userViewModel.init(username.getText().toString(), password.getText().toString());
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
     }
 
+    @OnClick(R.id.sign_up)
     public void signUp(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://github.com/join?source=header-home"));

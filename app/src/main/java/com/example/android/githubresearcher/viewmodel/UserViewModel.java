@@ -1,34 +1,32 @@
 package com.example.android.githubresearcher.viewmodel;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.databinding.ObservableField;
+import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
-import com.example.android.githubresearcher.model.repository.DataRepository;
-import com.example.android.githubresearcher.model.repository.entities.UserEntity;
+import com.example.android.githubresearcher.model.AppDatabase;
+import com.example.android.githubresearcher.model.User;
+import com.example.android.githubresearcher.model.UserRepository;
 
-public class UserViewModel extends AndroidViewModel {
+import javax.inject.Inject;
 
-    private final LiveData<UserEntity> mObservableUser;
+public class UserViewModel extends ViewModel {
 
-    public ObservableField<UserEntity> user = new ObservableField<>();
+    private UserRepository userRepository;
 
-    private final int mUserId;
+    private LiveData<User> user;
 
-    public UserViewModel(@NonNull Application application, DataRepository repository, final int userId) {
-        super(application);
-        mUserId = userId;
-
-        mObservableUser = repository.loadUser(mUserId);
+    @Inject
+    public UserViewModel(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public LiveData<UserEntity> getmObservableUser() {
-        return mObservableUser;
+    public void init(String login, String password) {
+        if (this.user == null) {
+            user = userRepository.getUser(login, password);
+        }
     }
-
-    public void setUser(UserEntity user) {
-        this.user.set(user);
+    public LiveData<User> getUser() {
+        return user;
     }
 }

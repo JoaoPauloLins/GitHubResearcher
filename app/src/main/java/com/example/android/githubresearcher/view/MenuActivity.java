@@ -1,5 +1,8 @@
 package com.example.android.githubresearcher.view;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,7 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.android.githubresearcher.R;
-import com.example.android.githubresearcher.model.service.pojo.UserPojo;
+import com.example.android.githubresearcher.model.User;
+import com.example.android.githubresearcher.viewmodel.UserViewModel;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +34,13 @@ public class MenuActivity extends AppCompatActivity {
     @BindView(R.id.tabs)
     TabLayout tabLayout;
 
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
+    private UserViewModel userViewModel;
+
+    private LiveData<User> user;
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     @Override
@@ -36,7 +49,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
 
-        UserPojo userPojo = (UserPojo)getIntent().getSerializableExtra("UserPojo");
+        userViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel.class);
 
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -45,7 +58,7 @@ public class MenuActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        setDataRepositoriesFragment(userPojo);
+        setDataRepositoriesFragment();
     }
 
     @Override
@@ -70,13 +83,16 @@ public class MenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setDataRepositoriesFragment(UserPojo userPojo) {
-        Bundle bundle = new Bundle();
-        bundle.putString("AVATAR", userPojo.getAvatarUrl());
-        bundle.putString("NOME", (String) userPojo.getName());
-        bundle.putString("LOGIN", userPojo.getLogin());
-        bundle.putString("BIO", (String) userPojo.getBio());
-        mSectionsPagerAdapter.getItem(0).setArguments(bundle);
+    private void setDataRepositoriesFragment() {
+        userViewModel.getUser()
+                .observe(this, user -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("AVATAR", user.getImageUrl());
+                    bundle.putString("NOME", user.getName());
+                    bundle.putString("LOGIN", user.getLogin());
+                    bundle.putString("BIO", user.getDescription());
+                    mSectionsPagerAdapter.getItem(0).setArguments(bundle);
+                });
     }
 
     /**
