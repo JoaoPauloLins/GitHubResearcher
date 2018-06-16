@@ -24,8 +24,8 @@ public class GitHubResearcherAppModule {
 
     @Provides
     @Singleton
-    Context provideContext(Application application) {
-        return application;
+    Context provideContext(GitHubResearcherApp gitHubResearcherApp) {
+        return gitHubResearcherApp.getApplicationContext();
     }
 
     @Provides
@@ -56,7 +56,7 @@ public class GitHubResearcherAppModule {
     }
 
     @Provides
-    public UserRepository provideGitHubResearcherRepository(GitHubService gitHubService,
+        public UserRepository provideGitHubResearcherRepository(GitHubService gitHubService,
                                                             Context context){
         return new UserRepositoryImpl(gitHubService, AppDatabase.getAppDatabase(context));
     }

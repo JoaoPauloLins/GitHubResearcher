@@ -2,9 +2,7 @@ package com.example.android.githubresearcher.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.NonNull;
 
-import com.example.android.githubresearcher.model.AppDatabase;
 import com.example.android.githubresearcher.model.User;
 import com.example.android.githubresearcher.model.UserRepository;
 
