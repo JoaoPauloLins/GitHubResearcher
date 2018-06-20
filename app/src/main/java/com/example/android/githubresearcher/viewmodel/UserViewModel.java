@@ -3,7 +3,7 @@ package com.example.android.githubresearcher.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.example.android.githubresearcher.model.User;
+import com.example.android.githubresearcher.model.UserEntity;
 import com.example.android.githubresearcher.model.UserRepository;
 
 import javax.inject.Inject;
@@ -12,19 +12,18 @@ public class UserViewModel extends ViewModel {
 
     private UserRepository userRepository;
 
-    private LiveData<User> user;
+    private LiveData<UserEntity> user;
 
     @Inject
-    public UserViewModel(UserRepository userRepository) {
+    public UserViewModel (UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public void init(String login, String password) {
-        if (this.user == null) {
-            user = userRepository.getUser(login, password);
-        }
+    public boolean init(String login, String password) {
+        user = userRepository.getUser(login, password);
+        return user != null;
     }
-    public LiveData<User> getUser() {
+    public LiveData<UserEntity> getUser() {
         return user;
     }
 }

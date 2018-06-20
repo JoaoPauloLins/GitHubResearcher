@@ -1,8 +1,7 @@
 package com.example.android.githubresearcher.view;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,10 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.android.githubresearcher.R;
-import com.example.android.githubresearcher.model.User;
 import com.example.android.githubresearcher.viewmodel.UserViewModel;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,14 +30,10 @@ public class MenuActivity extends AppCompatActivity {
     @BindView(R.id.tabs)
     TabLayout tabLayout;
 
-    @Inject
-    ViewModelProvider.Factory viewModelFactory;
-
     private UserViewModel userViewModel;
-
-    private LiveData<User> user;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private String username;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +41,13 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
 
-        userViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel.class);
+        Intent intent = getIntent();
+        username = intent.getStringExtra("Username");
+        password = intent.getStringExtra("Password");
+
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -63,42 +57,39 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     private void setDataRepositoriesFragment() {
-        userViewModel.getUser()
-                .observe(this, user -> {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("AVATAR", user.getImageUrl());
-                    bundle.putString("NOME", user.getName());
-                    bundle.putString("LOGIN", user.getLogin());
-                    bundle.putString("BIO", user.getDescription());
-                    mSectionsPagerAdapter.getItem(0).setArguments(bundle);
-                });
+
+        boolean login = userViewModel.init(username, password);
+
+        if (login) {
+            Bundle bundle = new Bundle();
+            bundle.putString("AVATAR", userViewModel.getUser().getValue().getAvatar());
+            bundle.putString("NOME", userViewModel.getUser().getValue().getName());
+            bundle.putString("LOGIN", userViewModel.getUser().getValue().getLogin());
+            bundle.putString("BIO", userViewModel.getUser().getValue().getBio());
+            mSectionsPagerAdapter.getItem(0).setArguments(bundle);
+//                    .observe(this, user -> {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("AVATAR", user.getAvatar());
+//                        bundle.putString("NOME", user.getName());
+//                        bundle.putString("LOGIN", user.getLogin());
+//                        bundle.putString("BIO", user.getBio());
+//                        mSectionsPagerAdapter.getItem(0).setArguments(bundle);
+//                    });
+        }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         private RepositoriesFragment repositoriesFragment;
@@ -114,8 +105,6 @@ public class MenuActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
                     return this.repositoriesFragment;
@@ -130,7 +119,6 @@ public class MenuActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
     }

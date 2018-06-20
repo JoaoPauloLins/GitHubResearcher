@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.githubresearcher.R;
+import com.example.android.githubresearcher.common.GitHubResearcherViewModelFactory;
 import com.example.android.githubresearcher.viewmodel.UserViewModel;
 
 import javax.inject.Inject;
@@ -37,16 +39,18 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.description)
     TextView description;
 
-    @Inject
-    ViewModelProvider.Factory viewModelFactory;
-
     private UserViewModel userViewModel;
+
+    @Inject
+    GitHubResearcherViewModelFactory factory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        userViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
 
         usernameWrapper.setHint("Username or email address");
         passwordWrapper.setHint("Password");
@@ -57,15 +61,27 @@ public class LoginActivity extends AppCompatActivity {
                 .append("Explore their public repositories;\n")
                 .append("Quickly edit yours repositories markdown and easily commit.")
         );
-
-        userViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel.class);
     }
 
     @OnClick(R.id.sign_in)
     public void signIn(View view) {
-        userViewModel.init(username.getText().toString(), password.getText().toString());
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
+
+        boolean login = userViewModel.init(
+                username.getText().toString(),
+                password.getText().toString());
+
+        if (login) {
+            Intent intent = new Intent(this, MenuActivity.class);
+            intent.putExtra("Username", username.getText().toString());
+            intent.putExtra("Password", password.getText().toString());
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(
+                    this.getApplicationContext(),
+                    "Usuário/Senha inválidos",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.sign_up)

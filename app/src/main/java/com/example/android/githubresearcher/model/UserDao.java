@@ -9,9 +9,9 @@ import android.arch.persistence.room.Query;
 @Dao
 public interface UserDao {
 
-    @Query("select * from User where id = :userId")
-    LiveData<User> selectUser(String userId);
+    @Query("select * from user where id = :userId")
+    LiveData<UserEntity> selectUser(String userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertUser(User user);
+    void insertUser(UserEntity user);
 }

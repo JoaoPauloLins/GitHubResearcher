@@ -40,9 +40,9 @@ public class RepositoriesFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        nomeUser.setText(getArguments().getString("NOME"));
-        loginUser.setText(getArguments().getString("LOGIN"));
-        bioUser.setText(getArguments().getString("BIO"));
-        Picasso.with(getContext()).load(getArguments().getString("AVATAR")).into(userAvatar);
+//        nomeUser.setText(getArguments().getString("NOME"));
+//        loginUser.setText(getArguments().getString("LOGIN"));
+//        bioUser.setText(getArguments().getString("BIO"));
+//        Picasso.with(getContext()).load(getArguments().getString("AVATAR")).into(userAvatar);
     }
 }

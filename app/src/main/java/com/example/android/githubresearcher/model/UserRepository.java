@@ -1,8 +1,9 @@
 package com.example.android.githubresearcher.model;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 
 public interface UserRepository {
 
-    LiveData<User> getUser(String login, String password);
+    LiveData<UserEntity> getUser(String login, String password);
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.example.android.githubresearcher.model.AppDatabase;
 import com.example.android.githubresearcher.model.GitHubService;
+import com.example.android.githubresearcher.model.UserDao;
 import com.example.android.githubresearcher.model.UserRepository;
 import com.example.android.githubresearcher.model.UserRepositoryImpl;
 
@@ -26,6 +27,12 @@ public class GitHubResearcherAppModule {
     @Singleton
     Context provideContext(GitHubResearcherApp gitHubResearcherApp) {
         return gitHubResearcherApp.getApplicationContext();
+    }
+
+    @Provides
+    @Singleton
+    UserDao provideUserDao(Context context) {
+        return AppDatabase.getAppDatabase(context).userDao();
     }
 
     @Provides
@@ -56,14 +63,13 @@ public class GitHubResearcherAppModule {
     }
 
     @Provides
-        public UserRepository provideGitHubResearcherRepository(GitHubService gitHubService,
-                                                            Context context){
-        return new UserRepositoryImpl(gitHubService, AppDatabase.getAppDatabase(context));
+        public UserRepository provideGitHubResearcherRepository(GitHubService gitHubService, UserDao userDao){
+        return new UserRepositoryImpl(gitHubService, userDao);
     }
 
     @Singleton
     @Provides
-    ViewModelProvider.Factory provideViewModelFactory(
+    GitHubResearcherViewModelFactory provideViewModelFactory(
             ViewModelSubComponent.Builder viewModelSubComponent) {
 
         return new GitHubResearcherViewModelFactory(viewModelSubComponent.build());

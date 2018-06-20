@@ -22,4 +22,6 @@ public interface GitHubResearcherAppComponent {
     }
 
     void inject(GitHubResearcherApp gitHubResearcherApp);
+
+    //UserRepository userRepository();
 }
