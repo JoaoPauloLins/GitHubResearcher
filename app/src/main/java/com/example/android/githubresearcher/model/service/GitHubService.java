@@ -8,7 +8,6 @@ import retrofit2.http.Path;
 
 public interface GitHubService {
 
-    @GET("autentica/{username}/{password}")
-    Observable<UserPojo> getUser(@Path("username") String username,
-                                 @Path("password") String password);
+    @GET("autentica")
+    Observable<UserPojo> getUser();
 }
