@@ -6,44 +6,35 @@ import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.android.githubresearcher.repository.UserRepository;
-import com.example.android.githubresearcher.util.AbsentLiveData;
 import com.example.android.githubresearcher.util.Objects;
 import com.example.android.githubresearcher.vo.Resource;
 import com.example.android.githubresearcher.vo.User;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class LoginViewModel extends ViewModel {
 
-    final MutableLiveData<String> login = new MutableLiveData<>();
+    private UserRepository userRepository;
 
-    private final LiveData<Resource<User>> user;
+    MutableLiveData<String> authenticationLiveData = new MutableLiveData<>();
+
+    private LiveData<Resource<User>> user = Transformations.switchMap(
+            authenticationLiveData, authentication -> userRepository.loadUser(authentication)
+    );
+
     @SuppressWarnings("unchecked")
     @Inject
     public LoginViewModel(UserRepository userRepository) {
-        user = Transformations.switchMap(login, login -> {
-            if (login == null) {
-                return AbsentLiveData.create();
-            } else {
-                return userRepository.loadUser(login);
-            }
-        });
+        this.userRepository = userRepository;
     }
 
-    public void setLogin(String login) {
-        if (Objects.equals(this.login.getValue(), login)) {
-            return;
-        }
-        this.login.setValue(login);
+    public void authenticate(String login, String password) {
+        authenticationLiveData.setValue(login+":"+password);
     }
 
     public LiveData<Resource<User>> getUser() {
         return user;
-    }
-
-    public void retry() {
-        if (this.login.getValue() != null) {
-            this.login.setValue(this.login.getValue());
-        }
     }
 }

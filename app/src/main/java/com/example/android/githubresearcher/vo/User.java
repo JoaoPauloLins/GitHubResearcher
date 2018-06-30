@@ -1,26 +1,28 @@
 package com.example.android.githubresearcher.vo;
 
 import android.arch.persistence.room.Entity;
-import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity(primaryKeys = "login")
+@Entity(primaryKeys = "id")
 public class User {
+
+    @SerializedName("id")
+    public final int id;
     @SerializedName("login")
-    @NonNull
     public final String login;
     @SerializedName("name")
     public final String name;
+    @SerializedName("avatar")
+    public final String avatar;
     @SerializedName("bio")
     public final String bio;
-    @SerializedName("avatar_url")
-    public final String avatarUrl;
 
-    public User(@NonNull String login, String name, String bio, String avatarUrl) {
+    public User(int id, String login, String name, String avatar, String bio) {
+        this.id = id;
         this.login = login;
         this.name = name;
+        this.avatar = avatar;
         this.bio = bio;
-        this.avatarUrl = avatarUrl;
     }
 }
