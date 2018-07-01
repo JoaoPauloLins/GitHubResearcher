@@ -4,8 +4,10 @@ import android.arch.persistence.room.Entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 @Entity(primaryKeys = "id")
-public class User {
+public class User implements Serializable {
 
     @SerializedName("id")
     public final int id;

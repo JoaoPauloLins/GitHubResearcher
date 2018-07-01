@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.githubresearcher.MenuActivity;
 import com.example.android.githubresearcher.R;
 import com.example.android.githubresearcher.di.Injectable;
 import com.example.android.githubresearcher.ui.common.NavigationController;
@@ -35,6 +37,9 @@ public class LoginFragment extends Fragment implements Injectable {
 
     @BindView(R.id.description)
     TextView description;
+
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -68,6 +73,8 @@ public class LoginFragment extends Fragment implements Injectable {
                         .append("Explore their public repositories;\n")
                         .append("Quickly edit yours repositories markdown and easily commit.")
         );
+
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.sign_in)
@@ -77,30 +84,28 @@ public class LoginFragment extends Fragment implements Injectable {
             if (userResource != null) {
                 switch (userResource.status){
                     case LOADING:
-                        Toast.makeText(
-                                getActivity(),
-                                "Carregando...",
-                                Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.VISIBLE);
                         break;
                     case SUCCESS:
+                        progressBar.setVisibility(View.INVISIBLE);
                         if (userResource.data != null && userResource.data.id != 0) {
-                            Toast.makeText(
-                                    getActivity(),
-                                    "Logou com sucesso!",
-                                    Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getActivity(), MenuActivity.class);
+                            intent.putExtra("User", userResource.data);
+                            startActivity(intent);
                         }
                         else {
                             Toast.makeText(
                                     getActivity(),
                                     "Usuário/Senha inválidos.",
-                                    Toast.LENGTH_SHORT).show();
+                                    Toast.LENGTH_LONG).show();
                         }
                         break;
                     case ERROR:
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(
                                 getActivity(),
                                 "Erro ao logar, tente novamente.",
-                                Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -108,7 +113,7 @@ public class LoginFragment extends Fragment implements Injectable {
                 Toast.makeText(
                     getActivity(),
                     "Erro ao logar, tente novamente.",
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_LONG).show();
             }
         });
     }
