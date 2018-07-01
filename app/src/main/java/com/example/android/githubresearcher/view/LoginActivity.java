@@ -16,9 +16,21 @@ import com.example.android.githubresearcher.viewmodel.UserViewModel;
 
 import javax.inject.Inject;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,9 +65,9 @@ public class LoginActivity extends AppCompatActivity {
 
         description.setText(
                 new StringBuilder()
-                .append("Find users or organizations from GitHub;\n")
-                .append("Explore their public repositories;\n")
-                .append("Quickly edit yours repositories markdown and easily commit.")
+                        .append("Find users or organizations from GitHub;\n")
+                        .append("Explore their public repositories;\n")
+                        .append("Quickly edit yours repositories markdown and easily commit.")
         );
 
         userViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel.class);
@@ -63,9 +75,46 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.sign_in)
     public void signIn(View view) {
-        userViewModel.init(username.getText().toString(), password.getText().toString());
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("User",username.getText().toString()+":"+password.getText().toString())
+                        .method(original.method(),original.body())
+                        .build();
+
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://git-researcher-api.herokuapp.com/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+        GitHubService gitHubService = retrofit.create(GitHubService.class);
+        Observable<UserPojo> userPojoObservable = gitHubService.getUser();
+
+        userPojoObservable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userPojo -> {
+                    if (userPojo.getName() != null) {
+                        Intent intent = new Intent(this, MenuActivity.class);
+                        intent.putExtra("UserPojo", userPojo);
+                        startActivity(intent);
+                    } else {
+                        mensagem = "Usuário/Senha inválidos";
+                    }
+                    Toast.makeText(this.getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
+                });
+    
     }
 
     @OnClick(R.id.sign_up)
