@@ -36,7 +36,7 @@ public class LoginFragment extends Fragment implements Injectable {
     @BindView(R.id.description)
     TextView description;
 
-    @BindView(R.id.progress_bar)
+    @BindView(R.id.progress_bar_login)
     ProgressBar progressBar;
 
     @Inject
