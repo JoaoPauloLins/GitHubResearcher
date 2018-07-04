@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.githubresearcher.R;
+import com.example.android.githubresearcher.di.Injectable;
 import com.example.android.githubresearcher.vo.User;
 
 import javax.inject.Inject;
@@ -20,7 +21,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RepositoriesFragment extends Fragment {
+public class RepositoriesFragment extends Fragment implements Injectable {
 
     private static final String USER_KEY = "user";
 

@@ -18,8 +18,6 @@ import android.widget.Toast;
 import com.example.android.githubresearcher.MenuActivity;
 import com.example.android.githubresearcher.R;
 import com.example.android.githubresearcher.di.Injectable;
-import com.example.android.githubresearcher.ui.common.NavigationController;
-import com.example.android.githubresearcher.vo.Status;
 
 import javax.inject.Inject;
 
@@ -43,9 +41,6 @@ public class LoginFragment extends Fragment implements Injectable {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
-
-    @Inject
-    NavigationController navigationController;
 
     private LoginViewModel loginViewModel;
 

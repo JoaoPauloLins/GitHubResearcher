@@ -23,6 +23,6 @@ public abstract class ViewModelModule {
     @ViewModelKey(RepositoriesViewModel.class)
     abstract ViewModel bindRepositoriesViewModel(RepositoriesViewModel repositoriesViewModel);
 
-    @Binds
-    abstract ViewModelProvider.Factory bindViewModelFactory(GithubViewModelFactory factory);
+//    @Binds
+//    abstract ViewModelProvider.Factory bindViewModelFactory(GithubViewModelFactory factory);
 }

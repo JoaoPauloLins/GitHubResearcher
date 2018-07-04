@@ -1,6 +1,8 @@
 package com.example.android.githubresearcher.di;
 
 import android.app.Application;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.persistence.room.Room;
 
 import com.example.android.githubresearcher.AppExecutors;
@@ -16,10 +18,13 @@ import com.example.android.githubresearcher.repository.RepoRepositoryImpl;
 import com.example.android.githubresearcher.repository.UserRepository;
 import com.example.android.githubresearcher.repository.UserRepositoryImpl;
 import com.example.android.githubresearcher.util.LiveDataCallAdapterFactory;
+import com.example.android.githubresearcher.viewmodel.GithubViewModelFactory;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.Executors;
 
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -33,6 +38,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = ViewModelModule.class)
 public class AppModule {
+
+    @Singleton
+    @Provides
+    ViewModelProvider.Factory provideViewModelProviderFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators) {
+        return new GithubViewModelFactory(creators);
+    }
 
     @Singleton
     @Provides
