@@ -18,7 +18,7 @@ public class LoginViewModel extends ViewModel {
 
     private UserRepository userRepository;
 
-    MutableLiveData<String> authenticationLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> authenticationLiveData = new MutableLiveData<>();
 
     private LiveData<Resource<User>> user = Transformations.switchMap(
             authenticationLiveData, authentication -> userRepository.loadUser(authentication)

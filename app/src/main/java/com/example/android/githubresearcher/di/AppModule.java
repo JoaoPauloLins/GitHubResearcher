@@ -1,6 +1,8 @@
 package com.example.android.githubresearcher.di;
 
 import android.app.Application;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.persistence.room.Room;
 
 import com.example.android.githubresearcher.AppExecutors;
@@ -9,14 +11,20 @@ import com.example.android.githubresearcher.api.AuthenticationHeader;
 import com.example.android.githubresearcher.api.AuthenticationHeaderImpl;
 import com.example.android.githubresearcher.api.GithubService;
 import com.example.android.githubresearcher.db.GithubDb;
+import com.example.android.githubresearcher.db.RepoDao;
 import com.example.android.githubresearcher.db.UserDao;
+import com.example.android.githubresearcher.repository.RepoRepository;
+import com.example.android.githubresearcher.repository.RepoRepositoryImpl;
 import com.example.android.githubresearcher.repository.UserRepository;
 import com.example.android.githubresearcher.repository.UserRepositoryImpl;
 import com.example.android.githubresearcher.util.LiveDataCallAdapterFactory;
+import com.example.android.githubresearcher.viewmodel.GithubViewModelFactory;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.Executors;
 
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -30,6 +38,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = ViewModelModule.class)
 public class AppModule {
+
+    @Singleton
+    @Provides
+    ViewModelProvider.Factory provideViewModelProviderFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators) {
+        return new GithubViewModelFactory(creators);
+    }
 
     @Singleton
     @Provides
@@ -90,10 +104,24 @@ public class AppModule {
 
     @Singleton
     @Provides
+    RepoDao provideRepoDao(GithubDb db) {
+        return db.repoDao();
+    }
+
+    @Singleton
+    @Provides
     UserRepository provideUserRepository(AppExecutors appExecutors,
                                          UserDao userDao,
                                          GithubService githubService,
                                          AuthenticationHeader authenticationHeader) {
         return new UserRepositoryImpl(appExecutors, userDao, githubService, authenticationHeader);
+    }
+
+    @Singleton
+    @Provides
+    RepoRepository provideRepoRepository(AppExecutors appExecutors,
+                                         RepoDao repoDao,
+                                         GithubService githubService) {
+        return new RepoRepositoryImpl(appExecutors, repoDao, githubService);
     }
 }

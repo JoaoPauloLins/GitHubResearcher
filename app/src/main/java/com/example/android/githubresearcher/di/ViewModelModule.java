@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.example.android.githubresearcher.ui.login.LoginViewModel;
+import com.example.android.githubresearcher.ui.menu.RepositoriesViewModel;
 import com.example.android.githubresearcher.viewmodel.GithubViewModelFactory;
 
 import dagger.Binds;
@@ -15,8 +16,13 @@ public abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel.class)
-    abstract ViewModel bindUserViewModel(LoginViewModel loginViewModel);
+    abstract ViewModel bindLoginViewModel(LoginViewModel loginViewModel);
 
     @Binds
-    abstract ViewModelProvider.Factory bindViewModelFactory(GithubViewModelFactory factory);
+    @IntoMap
+    @ViewModelKey(RepositoriesViewModel.class)
+    abstract ViewModel bindRepositoriesViewModel(RepositoriesViewModel repositoriesViewModel);
+
+//    @Binds
+//    abstract ViewModelProvider.Factory bindViewModelFactory(GithubViewModelFactory factory);
 }

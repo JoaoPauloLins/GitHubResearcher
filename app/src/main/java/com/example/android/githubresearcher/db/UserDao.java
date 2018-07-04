@@ -11,11 +11,8 @@ import com.example.android.githubresearcher.vo.User;
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(User user);
+    void insertUser(User user);
 
     @Query("SELECT * FROM user WHERE login = :login")
     LiveData<User> findByLogin(String login);
-
-    @Query("SELECT * FROM user WHERE id = :id")
-    LiveData<User> findById(int id);
 }

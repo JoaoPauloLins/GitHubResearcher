@@ -18,8 +18,6 @@ import android.widget.Toast;
 import com.example.android.githubresearcher.MenuActivity;
 import com.example.android.githubresearcher.R;
 import com.example.android.githubresearcher.di.Injectable;
-import com.example.android.githubresearcher.ui.common.NavigationController;
-import com.example.android.githubresearcher.vo.Status;
 
 import javax.inject.Inject;
 
@@ -43,9 +41,6 @@ public class LoginFragment extends Fragment implements Injectable {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
-
-    @Inject
-    NavigationController navigationController;
 
     private LoginViewModel loginViewModel;
 
@@ -88,7 +83,7 @@ public class LoginFragment extends Fragment implements Injectable {
                         break;
                     case SUCCESS:
                         progressBar.setVisibility(View.INVISIBLE);
-                        if (userResource.data != null && userResource.data.id != 0) {
+                        if (userResource.data != null && userResource.data.login != null) {
                             Intent intent = new Intent(getActivity(), MenuActivity.class);
                             intent.putExtra("User", userResource.data);
                             startActivity(intent);
@@ -104,7 +99,7 @@ public class LoginFragment extends Fragment implements Injectable {
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(
                                 getActivity(),
-                                "Erro ao logar, tente novamente.",
+                                "Erro ao logar, tente novamente mais tarde.",
                                 Toast.LENGTH_LONG).show();
                         break;
                 }
