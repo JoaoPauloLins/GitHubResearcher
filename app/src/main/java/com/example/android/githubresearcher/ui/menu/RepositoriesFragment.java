@@ -1,5 +1,7 @@
 package com.example.android.githubresearcher.ui.menu;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.android.githubresearcher.R;
 import com.example.android.githubresearcher.vo.User;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +36,11 @@ public class RepositoriesFragment extends Fragment {
     @BindView(R.id.bioUser)
     TextView bioUser;
 
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
+    private RepositoriesViewModel repositoriesViewModel;
+
     public static RepositoriesFragment create(User user) {
         RepositoriesFragment repositoriesFragment = new RepositoriesFragment();
         Bundle bundle = new Bundle();
@@ -51,6 +60,8 @@ public class RepositoriesFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        repositoriesViewModel = ViewModelProviders.of(this, viewModelFactory).get(RepositoriesViewModel.class);
+
         User user = (User) getArguments().getSerializable(USER_KEY);
         nomeUser.setText(user.name);
         loginUser.setText(user.login);

@@ -9,7 +9,10 @@ import com.example.android.githubresearcher.api.AuthenticationHeader;
 import com.example.android.githubresearcher.api.AuthenticationHeaderImpl;
 import com.example.android.githubresearcher.api.GithubService;
 import com.example.android.githubresearcher.db.GithubDb;
+import com.example.android.githubresearcher.db.RepoDao;
 import com.example.android.githubresearcher.db.UserDao;
+import com.example.android.githubresearcher.repository.RepoRepository;
+import com.example.android.githubresearcher.repository.RepoRepositoryImpl;
 import com.example.android.githubresearcher.repository.UserRepository;
 import com.example.android.githubresearcher.repository.UserRepositoryImpl;
 import com.example.android.githubresearcher.util.LiveDataCallAdapterFactory;
@@ -90,10 +93,24 @@ public class AppModule {
 
     @Singleton
     @Provides
+    RepoDao provideRepoDao(GithubDb db) {
+        return db.repoDao();
+    }
+
+    @Singleton
+    @Provides
     UserRepository provideUserRepository(AppExecutors appExecutors,
                                          UserDao userDao,
                                          GithubService githubService,
                                          AuthenticationHeader authenticationHeader) {
         return new UserRepositoryImpl(appExecutors, userDao, githubService, authenticationHeader);
+    }
+
+    @Singleton
+    @Provides
+    RepoRepository provideRepoRepository(AppExecutors appExecutors,
+                                         RepoDao repoDao,
+                                         GithubService githubService) {
+        return new RepoRepositoryImpl(appExecutors, repoDao, githubService);
     }
 }

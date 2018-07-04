@@ -3,11 +3,8 @@ package com.example.android.githubresearcher.repository;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.example.android.githubresearcher.AppExecutors;
-import com.example.android.githubresearcher.AppExecutorsImpl;
 import com.example.android.githubresearcher.api.ApiResponse;
 import com.example.android.githubresearcher.api.AuthenticationHeader;
 import com.example.android.githubresearcher.api.GithubService;
@@ -15,8 +12,6 @@ import com.example.android.githubresearcher.db.UserDao;
 import com.example.android.githubresearcher.util.Objects;
 import com.example.android.githubresearcher.vo.Resource;
 import com.example.android.githubresearcher.vo.User;
-
-import javax.inject.Inject;
 
 public class UserRepositoryImpl implements UserRepository{
 
@@ -64,7 +59,7 @@ public class UserRepositoryImpl implements UserRepository{
                     if (response.isSuccessful()) {
                         appExecutors.diskIO().execute(() -> {
                             User user = response.body;
-                            userDao.insert(user);
+                            userDao.insertUser(user);
                             result.addSource(userDao.findByLogin(login),
                                     newData -> setValue(Resource.success(user)));
                         });
@@ -80,7 +75,7 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public LiveData<User> getUser(int id) {
-        return userDao.findById(id);
+    public LiveData<User> getUser(String login) {
+        return userDao.findByLogin(login);
     }
 }

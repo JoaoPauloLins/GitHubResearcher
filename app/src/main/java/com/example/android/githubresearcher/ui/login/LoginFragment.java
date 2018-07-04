@@ -88,7 +88,7 @@ public class LoginFragment extends Fragment implements Injectable {
                         break;
                     case SUCCESS:
                         progressBar.setVisibility(View.INVISIBLE);
-                        if (userResource.data != null && userResource.data.id != 0) {
+                        if (userResource.data != null && userResource.data.login != null) {
                             Intent intent = new Intent(getActivity(), MenuActivity.class);
                             intent.putExtra("User", userResource.data);
                             startActivity(intent);
@@ -104,7 +104,7 @@ public class LoginFragment extends Fragment implements Injectable {
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(
                                 getActivity(),
-                                "Erro ao logar, tente novamente.",
+                                "Erro ao logar, tente novamente mais tarde.",
                                 Toast.LENGTH_LONG).show();
                         break;
                 }
