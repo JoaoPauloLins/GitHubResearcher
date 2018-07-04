@@ -1,6 +1,8 @@
 package com.example.android.githubresearcher.ui.menu;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.android.githubresearcher.repository.RepoRepository;
@@ -15,13 +17,23 @@ public class RepositoriesViewModel extends ViewModel {
 
     private RepoRepository repoRepository;
 
+    private MutableLiveData<String> loginLiveData = new MutableLiveData<>();
+
+    private LiveData<Resource<List<Repo>>> repos = Transformations.switchMap(
+            loginLiveData, login -> repoRepository.loadRepos(login)
+    );
+
     @SuppressWarnings("unchecked")
     @Inject
     public RepositoriesViewModel(RepoRepository repoRepository) {
         this.repoRepository = repoRepository;
     }
 
-    public LiveData<Resource<List<Repo>>> getRepos(String login) {
-        return repoRepository.loadRepos(login);
+    public void loadRepos(String login) {
+        loginLiveData.setValue(login);
+    }
+
+    public LiveData<Resource<List<Repo>>> getRepos() {
+        return repos;
     }
 }

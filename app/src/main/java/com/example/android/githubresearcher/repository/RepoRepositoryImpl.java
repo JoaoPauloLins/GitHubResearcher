@@ -43,7 +43,8 @@ public class RepoRepositoryImpl implements RepoRepository {
         LiveData<List<Repo>> dbSource = repoDao.findReposByUserLogin(login);
         result.addSource(dbSource, data -> {
             result.removeSource(dbSource);
-            if (data == null) {
+            assert data != null;
+            if (data.size() == 0) {
                 LiveData<ApiResponse<List<Repo>>> apiResponse = githubService.getRepos(login);
                 result.addSource(dbSource, newData ->setValue(Resource.loading(newData)));
                 result.addSource(apiResponse, response -> {
