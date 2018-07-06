@@ -1,4 +1,4 @@
-package com.example.android.githubresearcher.ui.menu;
+package com.example.android.githubresearcher.ui.menu.repositories;
 
 import android.content.Context;
 import android.content.Intent;

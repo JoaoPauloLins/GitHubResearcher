@@ -19,4 +19,9 @@ public interface GithubService {
 
     @GET("repos/{login}")
     LiveData<ApiResponse<List<Repo>>> getRepos(@Path("login") String login);
+
+    @GET("search/repos/{query}/{page}/{perPage}")
+    LiveData<ApiResponse<List<Repo>>> getSearchRepos(@Path("query") String query,
+                                                     @Path("page") int page,
+                                                     @Path("perPage") int perPage);
 }

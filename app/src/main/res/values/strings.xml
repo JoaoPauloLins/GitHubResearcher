@@ -10,7 +10,7 @@
     <string name="tab_text_1">Repositories</string>
     <string name="tab_text_2">Search</string>
     <string name="tab_text_3">List</string>
-    <string name="hint_search">Users or organizations</string>
+    <string name="hint_search">Repositories</string>
     <string name="button_search">Search</string>
     <string name="hint_list">New list name</string>
     <string name="button_list">Add new list</string>

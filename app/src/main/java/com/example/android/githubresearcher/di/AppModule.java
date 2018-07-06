@@ -15,6 +15,8 @@ import com.example.android.githubresearcher.db.RepoDao;
 import com.example.android.githubresearcher.db.UserDao;
 import com.example.android.githubresearcher.repository.RepoRepository;
 import com.example.android.githubresearcher.repository.RepoRepositoryImpl;
+import com.example.android.githubresearcher.repository.SearchRepository;
+import com.example.android.githubresearcher.repository.SearchRepositoryImpl;
 import com.example.android.githubresearcher.repository.UserRepository;
 import com.example.android.githubresearcher.repository.UserRepositoryImpl;
 import com.example.android.githubresearcher.util.LiveDataCallAdapterFactory;
@@ -123,5 +125,11 @@ public class AppModule {
                                          RepoDao repoDao,
                                          GithubService githubService) {
         return new RepoRepositoryImpl(appExecutors, repoDao, githubService);
+    }
+
+    @Singleton
+    @Provides
+    SearchRepository provideSearchRepository(GithubService githubService) {
+        return new SearchRepositoryImpl(githubService);
     }
 }

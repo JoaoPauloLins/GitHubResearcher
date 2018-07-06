@@ -1,7 +1,5 @@
 package com.example.android.githubresearcher;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,18 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.example.android.githubresearcher.ui.menu.ListFragment;
-import com.example.android.githubresearcher.ui.menu.RepositoriesFragment;
-import com.example.android.githubresearcher.ui.menu.SearchFragment;
+import com.example.android.githubresearcher.ui.menu.list.ListFragment;
+import com.example.android.githubresearcher.ui.menu.repositories.RepositoriesFragment;
+import com.example.android.githubresearcher.ui.menu.search.SearchFragment;
 import com.example.android.githubresearcher.vo.User;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 

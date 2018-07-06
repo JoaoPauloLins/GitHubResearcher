@@ -1,11 +1,10 @@
 package com.example.android.githubresearcher.di;
 
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
 
 import com.example.android.githubresearcher.ui.login.LoginViewModel;
-import com.example.android.githubresearcher.ui.menu.RepositoriesViewModel;
-import com.example.android.githubresearcher.viewmodel.GithubViewModelFactory;
+import com.example.android.githubresearcher.ui.menu.repositories.RepositoriesViewModel;
+import com.example.android.githubresearcher.ui.menu.search.SearchViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -23,6 +22,8 @@ public abstract class ViewModelModule {
     @ViewModelKey(RepositoriesViewModel.class)
     abstract ViewModel bindRepositoriesViewModel(RepositoriesViewModel repositoriesViewModel);
 
-//    @Binds
-//    abstract ViewModelProvider.Factory bindViewModelFactory(GithubViewModelFactory factory);
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel.class)
+    abstract ViewModel bindSearchViewModel(SearchViewModel searchViewModel);
 }
