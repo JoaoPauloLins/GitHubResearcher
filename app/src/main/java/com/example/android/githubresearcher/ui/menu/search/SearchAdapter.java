@@ -29,6 +29,10 @@ public class SearchAdapter extends RecyclerView.Adapter {
     private static final int VIEW_REPO = 1;
     private static final int VIEW_LOAD = 0;
 
+    public SearchAdapter(Context context) {
+        this.context = context;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,7 +42,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
 
         if (viewType == VIEW_REPO) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.repo_card, parent, false);
+                    .inflate(R.layout.item_card, parent, false);
             viewHolder = new RepositoriesViewHolder(view);
         }
         else {
@@ -81,10 +85,6 @@ public class SearchAdapter extends RecyclerView.Adapter {
         return repositories.size();
     }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
     public void addRepositories(List<Repo> repositories){
         if (repositories != null) {
             int position = this.repositories.size();
@@ -112,9 +112,9 @@ public class SearchAdapter extends RecyclerView.Adapter {
     }
 
     class RepositoriesViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.repoCard)
+        @BindView(R.id.card)
         CardView repoCard;
-        @BindView(R.id.repoName)
+        @BindView(R.id.name)
         TextView repoName;
 
         RepositoriesViewHolder(View view) {

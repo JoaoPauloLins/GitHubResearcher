@@ -13,10 +13,13 @@ import com.example.android.githubresearcher.api.GithubService;
 import com.example.android.githubresearcher.db.GithubDb;
 import com.example.android.githubresearcher.db.RepoDao;
 import com.example.android.githubresearcher.db.UserDao;
+import com.example.android.githubresearcher.db.UserListDao;
 import com.example.android.githubresearcher.repository.RepoRepository;
 import com.example.android.githubresearcher.repository.RepoRepositoryImpl;
 import com.example.android.githubresearcher.repository.SearchRepository;
 import com.example.android.githubresearcher.repository.SearchRepositoryImpl;
+import com.example.android.githubresearcher.repository.UserListRepository;
+import com.example.android.githubresearcher.repository.UserListRepositoryImpl;
 import com.example.android.githubresearcher.repository.UserRepository;
 import com.example.android.githubresearcher.repository.UserRepositoryImpl;
 import com.example.android.githubresearcher.util.LiveDataCallAdapterFactory;
@@ -112,6 +115,12 @@ public class AppModule {
 
     @Singleton
     @Provides
+    UserListDao provideUserListDao(GithubDb db) {
+        return db.userListDao();
+    }
+
+    @Singleton
+    @Provides
     UserRepository provideUserRepository(AppExecutors appExecutors,
                                          UserDao userDao,
                                          GithubService githubService,
@@ -131,5 +140,12 @@ public class AppModule {
     @Provides
     SearchRepository provideSearchRepository(GithubService githubService) {
         return new SearchRepositoryImpl(githubService);
+    }
+
+    @Singleton
+    @Provides
+    UserListRepository provideUserListRepository(AppExecutors appExecutors,
+                                                 UserListDao userListDao) {
+        return new UserListRepositoryImpl(appExecutors, userListDao);
     }
 }

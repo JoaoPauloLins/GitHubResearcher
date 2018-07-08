@@ -96,7 +96,7 @@ public class MenuActivity extends AppCompatActivity implements HasSupportFragmen
             super(fm);
             repositoriesFragment = RepositoriesFragment.create(user);
             searchFragment = new SearchFragment();
-            listFragment = new ListFragment();
+            listFragment = ListFragment.create(user.login);
         }
 
         @Override

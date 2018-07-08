@@ -61,8 +61,8 @@ public class SearchFragment extends Fragment implements Injectable {
 
         searchViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchViewModel.class);
 
-        searchAdapter = new SearchAdapter();
-        searchAdapter.setContext(getContext());
+        searchAdapter = new SearchAdapter(getContext());
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         repoList.setLayoutManager(linearLayoutManager);
         repoList.setAdapter(searchAdapter);

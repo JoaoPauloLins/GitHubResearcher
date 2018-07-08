@@ -48,8 +48,8 @@ public class UserRepositoryImpl implements UserRepository{
 
         LiveData<User> dbSource = userDao.findByLogin(login);
         result.addSource(dbSource, data -> {
-            result.removeSource(dbSource);
             if (data == null) {
+                result.removeSource(dbSource);
                 LiveData<ApiResponse<User>> apiResponse = githubService.getUser();
                 result.addSource(dbSource, newData -> setValue(Resource.loading(newData)));
                 result.addSource(apiResponse, response -> {
@@ -68,6 +68,8 @@ public class UserRepositoryImpl implements UserRepository{
                                 newData -> setValue(Resource.error(response.errorMessage, newData)));
                     }
                 });
+            } else {
+                setValue(Resource.success(data));
             }
         });
 

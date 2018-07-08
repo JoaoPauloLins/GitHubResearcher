@@ -25,12 +25,16 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
     private List<Repo> repositories = new ArrayList<>();
     private Context context;
 
+    public RepositoriesAdapter(Context context) {
+        this.context = context;
+    }
+
     @NonNull
     @Override
     public RepositoriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.repo_card, parent, false);
+                .inflate(R.layout.item_card, parent, false);
         return new RepositoriesViewHolder(view);
     }
 
@@ -39,14 +43,11 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
 
         Repo repo = repositories.get(position);
         String repoPath = repo.userLogin+"/"+repo.name;
-        holder.repoCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = "https://github.com/"+repoPath;
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                context.startActivity(intent);
-            }
+        holder.repoCard.setOnClickListener(v -> {
+            String url = "https://github.com/"+repoPath;
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            context.startActivity(intent);
         });
         holder.repoName.setText(repoPath);
     }
@@ -62,14 +63,10 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
         notifyItemRangeInserted(position, repositories.size());
     }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
     class RepositoriesViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.repoCard)
+        @BindView(R.id.card)
         CardView repoCard;
-        @BindView(R.id.repoName)
+        @BindView(R.id.name)
         TextView repoName;
 
         RepositoriesViewHolder(View view) {
