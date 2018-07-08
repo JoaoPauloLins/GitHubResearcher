@@ -69,7 +69,17 @@ public class UserRepositoryImpl implements UserRepository{
                     }
                 });
             } else {
-                setValue(Resource.success(data));
+                result.removeSource(dbSource);
+                LiveData<ApiResponse<User>> apiResponse = githubService.getUser();
+                result.addSource(dbSource, newData -> setValue(Resource.loading(newData)));
+                result.addSource(apiResponse, response -> {
+                    result.removeSource(apiResponse);
+                    result.removeSource(dbSource);
+                    //noinspection ConstantConditions
+                    if (response.isSuccessful()) {
+                        setValue(Resource.success(data));
+                    }
+                });
             }
         });
 

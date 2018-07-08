@@ -83,7 +83,7 @@ public class LoginFragment extends Fragment implements Injectable {
                         break;
                     case SUCCESS:
                         progressBar.setVisibility(View.INVISIBLE);
-                        if (userResource.data != null && userResource.data.login != null) {
+                        if (userResource.data != null) {
                             Intent intent = new Intent(getActivity(), MenuActivity.class);
                             intent.putExtra("User", userResource.data);
                             startActivity(intent);
