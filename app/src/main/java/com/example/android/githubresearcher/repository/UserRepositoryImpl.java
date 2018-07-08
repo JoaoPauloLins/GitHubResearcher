@@ -44,9 +44,9 @@ public class UserRepositoryImpl implements UserRepository{
 
         authenticationHeader.setAuthentication(authentication);
 
-        String login = authentication.split(":")[0];
+        String username = authentication.split(":")[0];
 
-        LiveData<User> dbSource = userDao.findByLogin(login);
+        LiveData<User> dbSource = userDao.findByUsername(username);
         result.addSource(dbSource, data -> {
             if (data == null) {
                 result.removeSource(dbSource);
@@ -60,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository{
                         appExecutors.diskIO().execute(() -> {
                             User user = response.body;
                             userDao.insertUser(user);
-                            result.addSource(userDao.findByLogin(login),
+                            result.addSource(userDao.findByUsername(username),
                                     newData -> setValue(Resource.success(user)));
                         });
                     } else {
@@ -78,6 +78,6 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public LiveData<User> getUser(String login) {
-        return userDao.findByLogin(login);
+        return userDao.findByUsername(login);
     }
 }

@@ -30,8 +30,8 @@ public class LoginViewModel extends ViewModel {
         this.userRepository = userRepository;
     }
 
-    public void authenticate(String login, String password) {
-        authenticationLiveData.setValue(login+":"+password);
+    public void authenticate(String username, String password) {
+        authenticationLiveData.setValue(username+":"+password);
     }
 
     public LiveData<Resource<User>> getUser() {

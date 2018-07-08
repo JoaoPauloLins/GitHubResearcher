@@ -13,6 +13,6 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUser(User user);
 
-    @Query("SELECT * FROM user WHERE login = :login")
-    LiveData<User> findByLogin(String login);
+    @Query("SELECT * FROM user WHERE login = :username OR email = :username")
+    LiveData<User> findByUsername(String username);
 }

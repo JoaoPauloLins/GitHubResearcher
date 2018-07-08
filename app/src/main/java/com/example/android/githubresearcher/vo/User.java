@@ -15,14 +15,17 @@ public class User implements Serializable {
     public final String login;
     @SerializedName("name")
     public final String name;
+    @SerializedName("email")
+    public final String email;
     @SerializedName("avatar")
     public final String avatar;
     @SerializedName("bio")
     public final String bio;
 
-    public User(@NonNull String login, String name, String avatar, String bio) {
+    public User(@NonNull String login, String name, String email, String avatar, String bio) {
         this.login = login;
         this.name = name;
+        this.email = email;
         this.avatar = avatar;
         this.bio = bio;
     }
