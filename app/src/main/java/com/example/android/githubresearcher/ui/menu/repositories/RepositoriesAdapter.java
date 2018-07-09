@@ -46,13 +46,12 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
     public void onBindViewHolder(@NonNull RepositoriesViewHolder holder, int position) {
 
         Repo repo = repositories.get(position);
-        String repoPath = repo.userLogin+"/"+repo.name;
         holder.repoCard.setOnClickListener(v -> {
             Intent intent = new Intent(activity, DetailActivity.class);
             intent.putExtra("Repo", repo);
             context.startActivity(intent);
         });
-        holder.repoName.setText(repoPath);
+        holder.repoName.setText(repo.name);
     }
 
     @Override

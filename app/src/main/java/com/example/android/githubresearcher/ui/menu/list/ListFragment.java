@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +26,7 @@ import butterknife.OnClick;
 
 public class ListFragment extends Fragment implements Injectable {
 
-    private static final String LOGIN_KEY = "login";
+    private static final String USERID_KEY = "userId";
 
     @BindView(R.id.list_wrapper)
     TextInputLayout listWrapper;
@@ -48,12 +47,12 @@ public class ListFragment extends Fragment implements Injectable {
 
     private ListAdapter listAdapter;
 
-    private String userLogin;
+    private int userId;
 
-    public static ListFragment create(String userLogin) {
+    public static ListFragment create(int userId) {
         ListFragment listFragment = new ListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(LOGIN_KEY, userLogin);
+        bundle.putInt(USERID_KEY, userId);
         listFragment.setArguments(bundle);
         return listFragment;
     }
@@ -79,13 +78,13 @@ public class ListFragment extends Fragment implements Injectable {
         list.setLayoutManager(linearLayoutManager);
         list.setAdapter(listAdapter);
 
-        userLogin = getArguments().getString(LOGIN_KEY);
-        populateUserList(userLogin);
+        userId = getArguments().getInt(USERID_KEY);
+        populateUserList(userId);
     }
 
-    public void populateUserList(String userLogin) {
+    public void populateUserList(int userId) {
 
-        listViewModel.loadUserList(userLogin);
+        listViewModel.loadUserList(userId);
         listViewModel.getUserList().observe(this, userLists -> {
             if (userLists != null) {
                 if (userLists.size() > 0) {
@@ -106,6 +105,6 @@ public class ListFragment extends Fragment implements Injectable {
     @OnClick(R.id.list_button)
     public void addUserList() {
         String name = userListName.getText().toString();
-        listViewModel.saveUserList(name, userLogin);
+        listViewModel.saveUserList(userId, name);
     }
 }

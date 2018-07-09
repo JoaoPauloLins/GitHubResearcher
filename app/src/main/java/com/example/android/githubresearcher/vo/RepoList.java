@@ -4,35 +4,25 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.support.annotation.NonNull;
 
-@Entity(
-        primaryKeys = {"listName", "repoName", "userLogin"},
+@Entity(primaryKeys = {"listId", "repoId"},
         foreignKeys = {
                 @ForeignKey(
                         entity = UserList.class,
-                        parentColumns = "name",
-                        childColumns = "listName"
+                        parentColumns = "id",
+                        childColumns = "listId"
                 ),
                 @ForeignKey(
                         entity = Repo.class,
-                        parentColumns = "name",
-                        childColumns = "repoName"
-                ),
-                @ForeignKey(
-                        entity = User.class,
-                        parentColumns = "login",
-                        childColumns = "userLogin")})
+                        parentColumns = "id",
+                        childColumns = "repoId"
+                )})
 public class RepoList {
 
-    @NonNull
-    public final String listName;
-    @NonNull
-    public final String repoName;
-    @NonNull
-    public final String userLogin;
+    public final int listId;
+    public final int repoId;
 
-    public RepoList(@NonNull String listName, @NonNull String repoName, @NonNull String userLogin) {
-        this.listName = listName;
-        this.repoName = repoName;
-        this.userLogin = userLogin;
+    public RepoList(int listId, int repoId) {
+        this.listId = listId;
+        this.repoId = repoId;
     }
 }

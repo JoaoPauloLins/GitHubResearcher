@@ -38,14 +38,17 @@ public class RepoRepositoryImpl implements RepoRepository {
     }
 
     @Override
-    public LiveData<Resource<List<Repo>>> loadRepos(String login) {
+    public LiveData<Resource<List<Repo>>> loadRepos(String user) {
 
-        LiveData<List<Repo>> dbSource = repoDao.findReposByUserLogin(login);
+        int userId = Integer.parseInt(user.split(":")[0]);
+        String userLogin = user.split(":")[1];
+
+        LiveData<List<Repo>> dbSource = repoDao.findReposByUserId(userId);
         result.addSource(dbSource, data -> {
             assert data != null;
             if (data.size() == 0) {
                 result.removeSource(dbSource);
-                LiveData<ApiResponse<List<Repo>>> apiResponse = githubService.getRepos(login);
+                LiveData<ApiResponse<List<Repo>>> apiResponse = githubService.getRepos(userLogin);
                 result.addSource(dbSource, newData ->setValue(Resource.loading(newData)));
                 result.addSource(apiResponse, response -> {
                     result.removeSource(apiResponse);
@@ -58,7 +61,7 @@ public class RepoRepositoryImpl implements RepoRepository {
                             for (Repo repo : repos) {
                                 repoDao.insertRepos(repo);
                             }
-                            result.addSource(repoDao.findReposByUserLogin(login),
+                            result.addSource(repoDao.findReposByUserId(userId),
                                     newData -> setValue(Resource.success(repos)));
                         });
                     } else {

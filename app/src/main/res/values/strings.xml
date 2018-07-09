@@ -18,13 +18,7 @@
     <string name="readme">README</string>
     <string name="button_more">More</string>
     <string name="button_add_list">Add to list</string>
-
-    <string name="retry">Retry</string>
-    <string name="unknown_error">Unknown Error</string>
-    <string name="a11y_user_photo">user photo</string>
-    <string name="a11y_user_name">user name</string>
-    <string name="search_hint">search repositories</string>
-    <string name="repo_full_name"><b>%s</b>/%s</string>
-    <string name="empty_search_result">No results for <b>%s</b></string>
-    <string name="a11y_contributor_avatar">contributor avatar</string>
+    <string name="choose_list">Choose the lists</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_save">Save</string>
 </resources>

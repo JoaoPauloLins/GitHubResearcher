@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface UserListRepository {
 
-    LiveData<List<UserList>> loadUserList(String userLogin);
+    LiveData<List<UserList>> loadUserList(int userId);
+    LiveData<List<UserList>> loadUserListByRepo(int repoId);
     void saveUserList(UserList userList);
 }

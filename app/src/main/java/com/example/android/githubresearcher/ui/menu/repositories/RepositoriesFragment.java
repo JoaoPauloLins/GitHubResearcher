@@ -85,11 +85,11 @@ public class RepositoriesFragment extends Fragment implements Injectable {
                 .load(user.avatar)
                 .into(userAvatar);
 
-        populateRepositories(user.login);
+        populateRepositories(user.id, user.login);
     }
 
-    public void populateRepositories(String login) {
-        repositoriesViewModel.loadRepos(login);
+    public void populateRepositories(int userId, String userLogin) {
+        repositoriesViewModel.loadRepos(userId, userLogin);
         repositoriesViewModel.getRepos().observe(this, repoResource -> {
             if (repoResource != null) {
                 switch (repoResource.status){

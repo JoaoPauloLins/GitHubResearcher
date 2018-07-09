@@ -17,10 +17,10 @@ public class ListViewModel extends ViewModel {
 
     private UserListRepository userListRepository;
 
-    private MutableLiveData<String> loginLiveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> userIdLiveData = new MutableLiveData<>();
 
     private LiveData<List<UserList>> userLists = Transformations.switchMap(
-            loginLiveData, login -> userListRepository.loadUserList(login)
+            userIdLiveData, userId -> userListRepository.loadUserList(userId)
     );
 
     @SuppressWarnings("unchecked")
@@ -29,16 +29,16 @@ public class ListViewModel extends ViewModel {
         this.userListRepository = userListRepository;
     }
 
-    public void loadUserList(String login) {
-        loginLiveData.setValue(login);
+    public void loadUserList(int userId) {
+        userIdLiveData.setValue(userId);
     }
 
     public LiveData<List<UserList>> getUserList() {
         return userLists;
     }
 
-    public void saveUserList(String name, String userLogin){
-        UserList userList = new UserList(name, userLogin);
+    public void saveUserList(int userId, String name){
+        UserList userList = new UserList(userId, name);
         userListRepository.saveUserList(userList);
     }
 }

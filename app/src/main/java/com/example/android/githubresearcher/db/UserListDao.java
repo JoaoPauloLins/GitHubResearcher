@@ -16,6 +16,15 @@ public interface UserListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUserList(UserList userList);
 
-    @Query("SELECT * FROM userList WHERE userLogin = :userLogin")
-    LiveData<List<UserList>> findUserListByLogin(String userLogin);
+    @Query("SELECT * FROM userList WHERE userId = :userId")
+    LiveData<List<UserList>> findUserListByUserId(int userId);
+
+    @Query("SELECT * FROM userList WHERE userId = :userId AND name = :name")
+    LiveData<List<UserList>> findUserListByName(int userId, String name);
+
+    @Query("SELECT * FROM userList WHERE id = :id")
+    UserList findUserListById(int id);
+
+    @Query("SELECT u.id FROM userList u WHERE NOT EXISTS (SELECT * FROM repoList WHERE listId = u.id AND repoId = :repoId)")
+    List<Integer> findUserListIdByRepoId(int repoId);
 }

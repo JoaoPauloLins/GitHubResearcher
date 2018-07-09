@@ -17,10 +17,10 @@ public class RepositoriesViewModel extends ViewModel {
 
     private RepoRepository repoRepository;
 
-    private MutableLiveData<String> loginLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> userLiveData = new MutableLiveData<>();
 
     private LiveData<Resource<List<Repo>>> repos = Transformations.switchMap(
-            loginLiveData, login -> repoRepository.loadRepos(login)
+            userLiveData, user -> repoRepository.loadRepos(user)
     );
 
     @SuppressWarnings("unchecked")
@@ -29,8 +29,9 @@ public class RepositoriesViewModel extends ViewModel {
         this.repoRepository = repoRepository;
     }
 
-    public void loadRepos(String login) {
-        loginLiveData.setValue(login);
+    public void loadRepos(int userId, String userLogin) {
+        String user = userId+":"+userLogin;
+        userLiveData.setValue(user);
     }
 
     public LiveData<Resource<List<Repo>>> getRepos() {

@@ -7,11 +7,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-@Entity(primaryKeys = "login")
+@Entity(primaryKeys = "id")
 public class User implements Serializable {
 
+    @SerializedName("id")
+    public final int id;
     @SerializedName("login")
-    @NonNull
     public final String login;
     @SerializedName("name")
     public final String name;
@@ -22,7 +23,8 @@ public class User implements Serializable {
     @SerializedName("bio")
     public final String bio;
 
-    public User(@NonNull String login, String name, String email, String avatar, String bio) {
+    public User(int id, String login, String name, String email, String avatar, String bio) {
+        this.id = id;
         this.login = login;
         this.name = name;
         this.email = email;

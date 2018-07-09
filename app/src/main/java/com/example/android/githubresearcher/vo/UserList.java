@@ -7,22 +7,20 @@ import android.support.annotation.NonNull;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(
-        primaryKeys = {"name","userLogin"},
-        foreignKeys = @ForeignKey(
+@Entity(foreignKeys = @ForeignKey(
                 entity = User.class,
-                parentColumns = "login",
-                childColumns = "userLogin",
+                parentColumns = "id",
+                childColumns = "userId",
                 onDelete = CASCADE))
 public class UserList {
 
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    public final int userId;
     public final String name;
-    @NonNull
-    public final String userLogin;
 
-    public UserList(@NonNull String name, @NonNull String userLogin) {
+    public UserList(int userId, String name) {
+        this.userId = userId;
         this.name = name;
-        this.userLogin = userLogin;
     }
 }

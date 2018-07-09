@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface RepoRepository {
 
-    LiveData<Resource<List<Repo>>> loadRepos(String login);
+    LiveData<Resource<List<Repo>>> loadRepos(String user);
 }

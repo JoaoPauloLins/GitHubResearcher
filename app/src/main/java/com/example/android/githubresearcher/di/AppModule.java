@@ -12,8 +12,11 @@ import com.example.android.githubresearcher.api.AuthenticationHeaderImpl;
 import com.example.android.githubresearcher.api.GithubService;
 import com.example.android.githubresearcher.db.GithubDb;
 import com.example.android.githubresearcher.db.RepoDao;
+import com.example.android.githubresearcher.db.RepoListDao;
 import com.example.android.githubresearcher.db.UserDao;
 import com.example.android.githubresearcher.db.UserListDao;
+import com.example.android.githubresearcher.repository.RepoListRepository;
+import com.example.android.githubresearcher.repository.RepoListRepositoryImpl;
 import com.example.android.githubresearcher.repository.RepoRepository;
 import com.example.android.githubresearcher.repository.RepoRepositoryImpl;
 import com.example.android.githubresearcher.repository.SearchRepository;
@@ -121,6 +124,12 @@ public class AppModule {
 
     @Singleton
     @Provides
+    RepoListDao provideRepoListDao(GithubDb db) {
+        return db.repoListDao();
+    }
+
+    @Singleton
+    @Provides
     UserRepository provideUserRepository(AppExecutors appExecutors,
                                          UserDao userDao,
                                          GithubService githubService,
@@ -147,5 +156,12 @@ public class AppModule {
     UserListRepository provideUserListRepository(AppExecutors appExecutors,
                                                  UserListDao userListDao) {
         return new UserListRepositoryImpl(appExecutors, userListDao);
+    }
+
+    @Singleton
+    @Provides
+    RepoListRepository provideRepoListRepository(AppExecutors appExecutors,
+                                                 RepoListDao repoListDao) {
+        return new RepoListRepositoryImpl(appExecutors, repoListDao);
     }
 }

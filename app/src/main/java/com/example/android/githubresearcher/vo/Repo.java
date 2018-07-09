@@ -10,21 +10,20 @@ import java.io.Serializable;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(
-        primaryKeys = {"name", "userLogin"},
+@Entity(primaryKeys = "id",
         foreignKeys = @ForeignKey(
                 entity = User.class,
-                parentColumns = "login",
-                childColumns = "userLogin",
+                parentColumns = "id",
+                childColumns = "userId",
                 onDelete = CASCADE))
 public class Repo implements Serializable {
 
+    @SerializedName("id")
+    public final int id;
     @SerializedName("name")
-    @NonNull
     public final String name;
-    @SerializedName("userLogin")
-    @NonNull
-    public final String userLogin;
+    @SerializedName("userId")
+    public final int userId;
     @SerializedName("description")
     public final String description;
     @SerializedName("language")
@@ -32,13 +31,15 @@ public class Repo implements Serializable {
     @SerializedName("createdAt")
     public final String createdAt;
 
-    public Repo(@NonNull String name,
-                @NonNull String userLogin,
+    public Repo(int id,
+                String name,
+                int userId,
                 String description,
                 String language,
                 String createdAt) {
+        this.id = id;
         this.name = name;
-        this.userLogin = userLogin;
+        this.userId = userId;
         this.description = description;
         this.language = language;
         this.createdAt = createdAt;

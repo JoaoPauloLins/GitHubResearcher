@@ -15,9 +15,9 @@ public interface RepoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRepos(Repo... repos);
 
-    @Query("SELECT * FROM repo WHERE name = :name")
-    LiveData<Repo> findRepoById(String name);
+    @Query("SELECT * FROM repo WHERE userId = :userId")
+    LiveData<List<Repo>> findReposByUserId(int userId);
 
-    @Query("SELECT * FROM repo WHERE userLogin = :userLogin")
-    LiveData<List<Repo>> findReposByUserLogin(String userLogin);
+    @Query("SELECT * FROM repo WHERE id = :id")
+    Repo findRepoById(int id);
 }

@@ -64,13 +64,12 @@ public class SearchAdapter extends RecyclerView.Adapter {
         if (holder instanceof RepositoriesViewHolder) {
             RepositoriesViewHolder repositoriesViewHolder = (RepositoriesViewHolder) holder;
             Repo repo = repositories.get(position);
-            String repoPath = repo.userLogin+"/"+repo.name;
             repositoriesViewHolder.repoCard.setOnClickListener(v -> {
                 Intent intent = new Intent(activity, DetailActivity.class);
                 intent.putExtra("Repo", repo);
                 context.startActivity(intent);
             });
-            repositoriesViewHolder.repoName.setText(repoPath);
+            repositoriesViewHolder.repoName.setText(repo.name);
         }
         else {
             LoadViewHolder loadViewHolder = (LoadViewHolder) holder;
