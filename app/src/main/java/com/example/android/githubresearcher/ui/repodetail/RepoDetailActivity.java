@@ -1,4 +1,4 @@
-package com.example.android.githubresearcher.ui.detail;
+package com.example.android.githubresearcher.ui.repodetail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,23 +15,23 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class DetailActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+public class RepoDetailActivity extends AppCompatActivity implements HasSupportFragmentInjector {
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_repo_detail);
 
         Repo repo = (Repo)getIntent().getSerializableExtra("Repo");
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         int containerId = R.id.container_detail;
         if (savedInstanceState == null) {
-            DetailFragment detailFragment = DetailFragment.create(repo);
+            RepoDetailFragment repoDetailFragment = RepoDetailFragment.create(repo);
             fragmentManager.beginTransaction()
-                    .replace(containerId, detailFragment)
+                    .replace(containerId, repoDetailFragment)
                     .commitAllowingStateLoss();
         }
     }

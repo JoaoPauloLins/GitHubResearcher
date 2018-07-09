@@ -2,7 +2,7 @@ package com.example.android.githubresearcher.di;
 
 import android.arch.lifecycle.ViewModel;
 
-import com.example.android.githubresearcher.ui.detail.DetailViewModel;
+import com.example.android.githubresearcher.ui.repodetail.RepoDetailViewModel;
 import com.example.android.githubresearcher.ui.login.LoginViewModel;
 import com.example.android.githubresearcher.ui.menu.list.ListViewModel;
 import com.example.android.githubresearcher.ui.menu.repositories.RepositoriesViewModel;
@@ -36,6 +36,6 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(DetailViewModel.class)
-    abstract ViewModel bindDetailViewModel(DetailViewModel detailViewModel);
+    @ViewModelKey(RepoDetailViewModel.class)
+    abstract ViewModel bindDetailViewModel(RepoDetailViewModel repoDetailViewModel);
 }

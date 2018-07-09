@@ -1,4 +1,4 @@
-package com.example.android.githubresearcher.ui.detail;
+package com.example.android.githubresearcher.ui.repodetail;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class DetailViewModel extends ViewModel {
+public class RepoDetailViewModel extends ViewModel {
 
     private RepoListRepository repoListRepository;
     private UserListRepository userListRepository;
@@ -27,8 +27,8 @@ public class DetailViewModel extends ViewModel {
 
     @SuppressWarnings("unchecked")
     @Inject
-    public DetailViewModel(RepoListRepository repoListRepository,
-                           UserListRepository userListRepository) {
+    public RepoDetailViewModel(RepoListRepository repoListRepository,
+                               UserListRepository userListRepository) {
         this.repoListRepository = repoListRepository;
         this.userListRepository = userListRepository;
     }

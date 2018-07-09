@@ -1,4 +1,4 @@
-package com.example.android.githubresearcher.ui.detail;
+package com.example.android.githubresearcher.ui.repodetail;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import com.example.android.githubresearcher.R;
-import com.example.android.githubresearcher.ui.menu.list.ListAdapter;
 import com.example.android.githubresearcher.vo.Repo;
 import com.example.android.githubresearcher.vo.RepoList;
 import com.example.android.githubresearcher.vo.UserList;
@@ -19,13 +18,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ListViewHolder>{
+public class RepoDetailAdapter extends RecyclerView.Adapter<RepoDetailAdapter.ListViewHolder>{
 
     private List<RepoList> repoLists = new ArrayList<>();
     private List<UserList> userLists = new ArrayList<>();
     private Repo repo;
 
-    public DetailAdapter(Repo repo) {
+    public RepoDetailAdapter(Repo repo) {
         this.repo = repo;
     }
 
@@ -34,7 +33,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ListViewHo
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.intem_checkbox, parent, false);
-        return new DetailAdapter.ListViewHolder(view);
+        return new RepoDetailAdapter.ListViewHolder(view);
     }
 
     @Override

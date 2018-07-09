@@ -1,6 +1,6 @@
 package com.example.android.githubresearcher.di;
 
-import com.example.android.githubresearcher.ui.detail.DetailActivity;
+import com.example.android.githubresearcher.ui.repodetail.RepoDetailActivity;
 import com.example.android.githubresearcher.ui.login.LoginActivity;
 import com.example.android.githubresearcher.ui.menu.MenuActivity;
 
@@ -16,5 +16,5 @@ public abstract class ActivityModule {
     abstract MenuActivity contributeMenuActivity();
 
     @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
-    abstract DetailActivity contributeDetailActivity();
+    abstract RepoDetailActivity contributeDetailActivity();
 }

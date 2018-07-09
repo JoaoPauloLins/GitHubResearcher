@@ -1,4 +1,4 @@
-package com.example.android.githubresearcher.ui.detail;
+package com.example.android.githubresearcher.ui.repodetail;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DetailFragment extends Fragment implements Injectable {
+public class RepoDetailFragment extends Fragment implements Injectable {
 
     private static final String REPO_KEY = "repo";
 
@@ -54,25 +53,25 @@ public class DetailFragment extends Fragment implements Injectable {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-    private DetailViewModel detailViewModel;
+    private RepoDetailViewModel repoDetailViewModel;
 
-    private DetailAdapter detailAdapter;
+    private RepoDetailAdapter repoDetailAdapter;
 
     private String repoPath;
 
-    public static DetailFragment create(Repo repo) {
-        DetailFragment detailFragment = new DetailFragment();
+    public static RepoDetailFragment create(Repo repo) {
+        RepoDetailFragment repoDetailFragment = new RepoDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(REPO_KEY, repo);
-        detailFragment.setArguments(bundle);
-        return detailFragment;
+        repoDetailFragment.setArguments(bundle);
+        return repoDetailFragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_repo_detail, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -83,7 +82,7 @@ public class DetailFragment extends Fragment implements Injectable {
 
         repoAddLayout.setVisibility(View.INVISIBLE);
 
-        detailViewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailViewModel.class);
+        repoDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(RepoDetailViewModel.class);
 
         Repo repo = (Repo) getArguments().getSerializable(REPO_KEY);
         repoPath = repo.name;
@@ -94,21 +93,21 @@ public class DetailFragment extends Fragment implements Injectable {
         repoLanguage.setText(language);
         repoCreatedAt.setText(createdAt);
 
-        detailAdapter = new DetailAdapter(repo);
+        repoDetailAdapter = new RepoDetailAdapter(repo);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         checkboxList.setLayoutManager(linearLayoutManager);
-        checkboxList.setAdapter(detailAdapter);
+        checkboxList.setAdapter(repoDetailAdapter);
         populateCheckBoxList(repo.id);
     }
 
     public void populateCheckBoxList(int repoId) {
 
-        detailViewModel.loadUserList(repoId);
-        detailViewModel.getUserLists().observe(this, userLists -> {
+        repoDetailViewModel.loadUserList(repoId);
+        repoDetailViewModel.getUserLists().observe(this, userLists -> {
             if (userLists != null) {
                 if (userLists.size() > 0) {
-                    detailAdapter.addUserList(userLists);
+                    repoDetailAdapter.addUserList(userLists);
                 }
             }
         });
@@ -134,8 +133,8 @@ public class DetailFragment extends Fragment implements Injectable {
 
     @OnClick(R.id.save)
     public void save(View view) {
-        List<RepoList> repoLists = detailAdapter.getRepoLists();
-        detailViewModel.saveRepoLists(repoLists);
+        List<RepoList> repoLists = repoDetailAdapter.getRepoLists();
+        repoDetailViewModel.saveRepoLists(repoLists);
         repoAddLayout.setVisibility(View.INVISIBLE);
     }
 }

@@ -3,7 +3,6 @@ package com.example.android.githubresearcher.ui.menu.search;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.githubresearcher.R;
-import com.example.android.githubresearcher.ui.detail.DetailActivity;
+import com.example.android.githubresearcher.ui.repodetail.RepoDetailActivity;
 import com.example.android.githubresearcher.vo.Repo;
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
             RepositoriesViewHolder repositoriesViewHolder = (RepositoriesViewHolder) holder;
             Repo repo = repositories.get(position);
             repositoriesViewHolder.repoCard.setOnClickListener(v -> {
-                Intent intent = new Intent(activity, DetailActivity.class);
+                Intent intent = new Intent(activity, RepoDetailActivity.class);
                 intent.putExtra("Repo", repo);
                 context.startActivity(intent);
             });
