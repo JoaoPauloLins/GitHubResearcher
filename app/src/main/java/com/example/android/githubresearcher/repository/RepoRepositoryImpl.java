@@ -49,6 +49,7 @@ public class RepoRepositoryImpl implements RepoRepository {
                 result.addSource(dbSource, newData ->setValue(Resource.loading(newData)));
                 result.addSource(apiResponse, response -> {
                     result.removeSource(apiResponse);
+                    result.removeSource(dbSource);
                     //noinspection ConstantConditions
                     if (response.isSuccessful()) {
                         appExecutors.diskIO().execute(() -> {

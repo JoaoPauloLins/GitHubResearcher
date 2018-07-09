@@ -1,5 +1,6 @@
 package com.example.android.githubresearcher.ui.menu.search;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.githubresearcher.R;
+import com.example.android.githubresearcher.ui.detail.DetailActivity;
 import com.example.android.githubresearcher.vo.Repo;
 
 import java.util.ArrayList;
@@ -24,12 +26,14 @@ import butterknife.ButterKnife;
 public class SearchAdapter extends RecyclerView.Adapter {
 
     private List<Repo> repositories = new ArrayList<>();
+    private Activity activity;
     private Context context;
 
     private static final int VIEW_REPO = 1;
     private static final int VIEW_LOAD = 0;
 
-    public SearchAdapter(Context context) {
+    public SearchAdapter(Activity activity, Context context) {
+        this.activity = activity;
         this.context = context;
     }
 
@@ -62,9 +66,8 @@ public class SearchAdapter extends RecyclerView.Adapter {
             Repo repo = repositories.get(position);
             String repoPath = repo.userLogin+"/"+repo.name;
             repositoriesViewHolder.repoCard.setOnClickListener(v -> {
-                String url = "https://github.com/"+repoPath;
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
+                Intent intent = new Intent(activity, DetailActivity.class);
+                intent.putExtra("Repo", repo);
                 context.startActivity(intent);
             });
             repositoriesViewHolder.repoName.setText(repoPath);

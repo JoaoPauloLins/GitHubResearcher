@@ -15,6 +15,9 @@
     <string name="hint_list">New list name</string>
     <string name="button_list">Add new list</string>
     <string name="create_list">You don\'t have any list yet…</string>
+    <string name="readme">README</string>
+    <string name="button_more">More</string>
+    <string name="button_add_list">Add to list</string>
 
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error</string>

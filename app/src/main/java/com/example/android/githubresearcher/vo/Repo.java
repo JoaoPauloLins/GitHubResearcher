@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(
@@ -15,7 +17,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 parentColumns = "login",
                 childColumns = "userLogin",
                 onDelete = CASCADE))
-public class Repo {
+public class Repo implements Serializable {
 
     @SerializedName("name")
     @NonNull
@@ -23,9 +25,22 @@ public class Repo {
     @SerializedName("userLogin")
     @NonNull
     public final String userLogin;
+    @SerializedName("description")
+    public final String description;
+    @SerializedName("language")
+    public final String language;
+    @SerializedName("createdAt")
+    public final String createdAt;
 
-    public Repo(@NonNull String name, @NonNull String userLogin) {
+    public Repo(@NonNull String name,
+                @NonNull String userLogin,
+                String description,
+                String language,
+                String createdAt) {
         this.name = name;
         this.userLogin = userLogin;
+        this.description = description;
+        this.language = language;
+        this.createdAt = createdAt;
     }
 }

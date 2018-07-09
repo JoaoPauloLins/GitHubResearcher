@@ -77,7 +77,15 @@ public class UserRepositoryImpl implements UserRepository{
                     result.removeSource(dbSource);
                     //noinspection ConstantConditions
                     if (response.isSuccessful()) {
-                        setValue(Resource.success(data));
+                        assert response.body != null;
+                        if (response.body.login != null) {
+                            setValue(Resource.success(data));
+                        } else {
+                            setValue(Resource.success(response.body));
+                        }
+                    } else {
+                        result.addSource(dbSource,
+                                newData -> setValue(Resource.error(response.errorMessage, newData)));
                     }
                 });
             }

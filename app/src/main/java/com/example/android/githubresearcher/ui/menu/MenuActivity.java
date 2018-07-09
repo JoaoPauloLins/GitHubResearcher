@@ -1,4 +1,4 @@
-package com.example.android.githubresearcher;
+package com.example.android.githubresearcher.ui.menu;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.android.githubresearcher.R;
 import com.example.android.githubresearcher.ui.menu.list.ListFragment;
 import com.example.android.githubresearcher.ui.menu.repositories.RepositoriesFragment;
 import com.example.android.githubresearcher.ui.menu.search.SearchFragment;
@@ -31,7 +32,7 @@ public class MenuActivity extends AppCompatActivity implements HasSupportFragmen
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.container)
+    @BindView(R.id.container_login)
     ViewPager mViewPager;
 
     @BindView(R.id.tabs)
@@ -95,7 +96,7 @@ public class MenuActivity extends AppCompatActivity implements HasSupportFragmen
         SectionsPagerAdapter(FragmentManager fm, User user) {
             super(fm);
             repositoriesFragment = RepositoriesFragment.create(user);
-            searchFragment = new SearchFragment();
+            searchFragment = SearchFragment.create();
             listFragment = ListFragment.create(user.login);
         }
 

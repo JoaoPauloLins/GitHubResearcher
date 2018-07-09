@@ -46,6 +46,10 @@ public class SearchFragment extends Fragment implements Injectable {
 
     private EndlessRecyclerViewScrollListener scrollListener;
 
+    public static SearchFragment create() {
+        return new SearchFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,7 +65,7 @@ public class SearchFragment extends Fragment implements Injectable {
 
         searchViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchViewModel.class);
 
-        searchAdapter = new SearchAdapter(getContext());
+        searchAdapter = new SearchAdapter(getActivity(), getContext());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         repoList.setLayoutManager(linearLayoutManager);

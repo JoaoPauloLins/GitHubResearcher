@@ -71,7 +71,7 @@ public class RepositoriesFragment extends Fragment implements Injectable {
         super.onActivityCreated(savedInstanceState);
         repositoriesViewModel = ViewModelProviders.of(this, viewModelFactory).get(RepositoriesViewModel.class);
 
-        repositoriesAdapter = new RepositoriesAdapter(getContext());
+        repositoriesAdapter = new RepositoriesAdapter(getActivity(), getContext());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         repoList.setLayoutManager(linearLayoutManager);

@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.githubresearcher.MenuActivity;
+import com.example.android.githubresearcher.ui.menu.MenuActivity;
 import com.example.android.githubresearcher.R;
 import com.example.android.githubresearcher.di.Injectable;
 
@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment implements Injectable {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -83,7 +83,7 @@ public class LoginFragment extends Fragment implements Injectable {
                         break;
                     case SUCCESS:
                         progressBar.setVisibility(View.INVISIBLE);
-                        if (userResource.data != null) {
+                        if (userResource.data != null && userResource.data.login != null) {
                             Intent intent = new Intent(getActivity(), MenuActivity.class);
                             intent.putExtra("User", userResource.data);
                             startActivity(intent);
