@@ -6,8 +6,11 @@ import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.android.githubresearcher.repository.RepoListRepository;
+import com.example.android.githubresearcher.repository.RepoRepository;
 import com.example.android.githubresearcher.repository.UserListRepository;
+import com.example.android.githubresearcher.vo.Readme;
 import com.example.android.githubresearcher.vo.RepoList;
+import com.example.android.githubresearcher.vo.Resource;
 import com.example.android.githubresearcher.vo.UserList;
 
 import java.util.List;
@@ -18,6 +21,7 @@ public class RepoDetailViewModel extends ViewModel {
 
     private RepoListRepository repoListRepository;
     private UserListRepository userListRepository;
+    private RepoRepository repoRepository;
 
     private MutableLiveData<Integer> repoIdLiveData = new MutableLiveData<>();
 
@@ -25,12 +29,20 @@ public class RepoDetailViewModel extends ViewModel {
             repoIdLiveData, repoId -> userListRepository.loadUserListByRepo(repoId)
     );
 
+    private MutableLiveData<String> repoPathLiveData = new MutableLiveData<>();
+
+    private LiveData<Resource<Readme>> readme = Transformations.switchMap(
+            repoPathLiveData, repoPath -> repoRepository.loadReadme(repoPath)
+    );
+
     @SuppressWarnings("unchecked")
     @Inject
     public RepoDetailViewModel(RepoListRepository repoListRepository,
-                               UserListRepository userListRepository) {
+                               UserListRepository userListRepository,
+                               RepoRepository repoRepository) {
         this.repoListRepository = repoListRepository;
         this.userListRepository = userListRepository;
+        this.repoRepository = repoRepository;
     }
 
     public void loadUserList(int repoId) {
@@ -43,5 +55,13 @@ public class RepoDetailViewModel extends ViewModel {
 
     public void saveRepoLists(List<RepoList> repoLists) {
         repoListRepository.saveRepoList(repoLists);
+    }
+
+    public void loadReadme(String repoPath) {
+        repoPathLiveData.setValue(repoPath);
+    }
+
+    public LiveData<Resource<Readme>> getReadme() {
+        return readme;
     }
 }
