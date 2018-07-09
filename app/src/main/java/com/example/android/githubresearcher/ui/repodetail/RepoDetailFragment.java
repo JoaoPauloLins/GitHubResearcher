@@ -105,10 +105,8 @@ public class RepoDetailFragment extends Fragment implements Injectable {
 
         repoDetailViewModel.loadUserList(repoId);
         repoDetailViewModel.getUserLists().observe(this, userLists -> {
-            if (userLists != null) {
-                if (userLists.size() > 0) {
-                    repoDetailAdapter.addUserList(userLists);
-                }
+            if (userLists != null && userLists.size() > 0) {
+                repoDetailAdapter.addUserList(userLists);
             }
         });
     }

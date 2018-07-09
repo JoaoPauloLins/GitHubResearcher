@@ -1,6 +1,8 @@
 package com.example.android.githubresearcher.ui.menu.list;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.githubresearcher.R;
+import com.example.android.githubresearcher.ui.listdetail.ListDetailActivity;
 import com.example.android.githubresearcher.vo.UserList;
 
 import java.util.ArrayList;
@@ -21,9 +24,11 @@ import butterknife.ButterKnife;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
     private List<UserList> userLists = new ArrayList<>();
+    private Activity activity;
     private Context context;
 
-    public ListAdapter(Context context) {
+    public ListAdapter(Activity activity, Context context) {
+        this.activity = activity;
         this.context = context;
     }
 
@@ -41,7 +46,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
         UserList userList = userLists.get(position);
         holder.listCard.setOnClickListener(v -> {
-            // TODO: ao clicar no card vai pra tela de lista de repositórios
+            Intent intent = new Intent(activity, ListDetailActivity.class);
+            intent.putExtra("List",userList);
+            context.startActivity(intent);
         });
         holder.listName.setText(userList.name);
     }

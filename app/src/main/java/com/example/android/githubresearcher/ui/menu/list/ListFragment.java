@@ -72,7 +72,7 @@ public class ListFragment extends Fragment implements Injectable {
 
         listViewModel = ViewModelProviders.of(this, viewModelFactory).get(ListViewModel.class);
 
-        listAdapter = new ListAdapter(getContext());
+        listAdapter = new ListAdapter(getActivity(), getContext());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         list.setLayoutManager(linearLayoutManager);

@@ -38,7 +38,7 @@ public class UserListRepositoryImpl implements UserListRepository{
         List<UserList> userLists = new ArrayList<>();
         appExecutors.diskIO().execute(() -> {
             List<Integer> userListIds = userListDao.findUserListIdByRepoId(repoId);
-            for (int userListId: userListIds) {
+            for (int userListId : userListIds) {
                 userLists.add(userListDao.findUserListById(userListId));
             }
             userListsLiveData.postValue(userLists);

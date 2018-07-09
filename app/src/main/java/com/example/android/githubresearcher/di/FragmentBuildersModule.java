@@ -1,5 +1,6 @@
 package com.example.android.githubresearcher.di;
 
+import com.example.android.githubresearcher.ui.listdetail.ListDetailFragment;
 import com.example.android.githubresearcher.ui.repodetail.RepoDetailFragment;
 import com.example.android.githubresearcher.ui.login.LoginFragment;
 import com.example.android.githubresearcher.ui.menu.list.ListFragment;
@@ -24,5 +25,8 @@ public abstract class FragmentBuildersModule {
     abstract ListFragment contributeListFragment();
 
     @ContributesAndroidInjector
-    abstract RepoDetailFragment contributeDetailFragment();
+    abstract RepoDetailFragment contributeRepoDetailFragment();
+
+    @ContributesAndroidInjector
+    abstract ListDetailFragment contributeListDetailFragment();
 }

@@ -5,6 +5,8 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
+
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(foreignKeys = @ForeignKey(
@@ -12,7 +14,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 parentColumns = "id",
                 childColumns = "userId",
                 onDelete = CASCADE))
-public class UserList {
+public class UserList implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     public int id;

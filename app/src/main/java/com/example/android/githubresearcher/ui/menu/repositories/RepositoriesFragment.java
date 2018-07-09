@@ -77,7 +77,7 @@ public class RepositoriesFragment extends Fragment implements Injectable {
         repoList.setLayoutManager(linearLayoutManager);
         repoList.setAdapter(repositoriesAdapter);
 
-        User user = (User) getArguments().getSerializable(USER_KEY);
+        User user = (User)getArguments().getSerializable(USER_KEY);
         nomeUser.setText(user.name);
         loginUser.setText(user.login);
         bioUser.setText(user.bio);

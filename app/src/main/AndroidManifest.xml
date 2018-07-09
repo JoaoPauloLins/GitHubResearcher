@@ -23,6 +23,7 @@
             android:name=".ui.menu.MenuActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.repodetail.RepoDetailActivity" />
+        <activity android:name=".ui.listdetail.ListDetailActivity" />
     </application>
 
 </manifest>
