@@ -2,6 +2,7 @@ package com.example.android.githubresearcher.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.MainThread;
 
 import com.example.android.githubresearcher.AppExecutors;
@@ -9,6 +10,7 @@ import com.example.android.githubresearcher.api.ApiResponse;
 import com.example.android.githubresearcher.api.GithubService;
 import com.example.android.githubresearcher.db.RepoDao;
 import com.example.android.githubresearcher.util.Objects;
+import com.example.android.githubresearcher.vo.Readme;
 import com.example.android.githubresearcher.vo.Repo;
 import com.example.android.githubresearcher.vo.Resource;
 
@@ -21,6 +23,8 @@ public class RepoRepositoryImpl implements RepoRepository {
     private final GithubService githubService;
 
     private final MediatorLiveData<Resource<List<Repo>>> result = new MediatorLiveData<>();
+
+    private final MediatorLiveData<Resource<Readme>> resultReadme = new MediatorLiveData<>();
 
     public RepoRepositoryImpl(AppExecutors appExecutors,
                               RepoDao repoDao,
@@ -35,6 +39,39 @@ public class RepoRepositoryImpl implements RepoRepository {
         if (!Objects.equals(result.getValue(), newValue)) {
             result.setValue(newValue);
         }
+    }
+
+    @MainThread
+    private void setValueReadme(Resource<Readme> newValue) {
+        if (!Objects.equals(resultReadme.getValue(), newValue)) {
+            resultReadme.setValue(newValue);
+        }
+    }
+
+    @Override
+    public LiveData<Resource<Readme>> loadReadme(String repoPath) {
+
+        String login = repoPath.split("/")[0];
+        String repoName = repoPath.split("/")[1];
+
+        MutableLiveData<Readme> dbSource = new MutableLiveData<>();
+        LiveData<ApiResponse<Readme>> apiResponse = githubService.getRepoReadme(login, repoName);
+        resultReadme.addSource(dbSource, newData -> setValueReadme(Resource.loading(newData)));
+        resultReadme.addSource(apiResponse, response -> {
+            resultReadme.removeSource(apiResponse);
+            //noinspection ConstantConditions
+            if (response.isSuccessful()) {
+                resultReadme.removeSource(dbSource);
+                Readme readme = response.body;
+                dbSource.postValue(readme);
+                resultReadme.addSource(dbSource, newData -> setValueReadme(Resource.success(readme)));
+            } else {
+                resultReadme.addSource(dbSource,
+                        newData -> setValueReadme(Resource.error(response.errorMessage, newData)));
+            }
+        });
+
+        return resultReadme;
     }
 
     @Override

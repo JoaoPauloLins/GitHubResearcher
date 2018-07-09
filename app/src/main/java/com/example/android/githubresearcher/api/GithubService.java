@@ -2,6 +2,7 @@ package com.example.android.githubresearcher.api;
 
 import android.arch.lifecycle.LiveData;
 
+import com.example.android.githubresearcher.vo.Readme;
 import com.example.android.githubresearcher.vo.Repo;
 import com.example.android.githubresearcher.vo.User;
 
@@ -19,6 +20,10 @@ public interface GithubService {
 
     @GET("repos/{login}")
     LiveData<ApiResponse<List<Repo>>> getRepos(@Path("login") String login);
+
+    @GET("lerReadme/{login}/{repoName}")
+    LiveData<ApiResponse<Readme>> getRepoReadme(@Path("login") String login,
+                                                @Path("repoName") String repoName);
 
     @GET("search/repos/{query}/{page}/{perPage}")
     LiveData<ApiResponse<List<Repo>>> getSearchRepos(@Path("query") String query,
