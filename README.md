@@ -7,7 +7,7 @@ Um app de pesquisa de repositórios do GitHub.
 ## Sobre o app
 - Neste aplicativo, que usando o GitHub REST API v3 como base, você pode pesquisar por repositórios públicos do GitHub, assim como criar listas de repositórios e ter acesso rápido a informações de seus repositórios também.
 - [Vídeo demonstrando principais funcionalidades](https://youtu.be/K8KaUbvNuMY)
-- [API made by us that communicates with Github REST API v3](https://github.com/matheusraz/requisicaoAPIGitJS)
+- [API feita por nós que se comunica com o Github REST API v3](https://github.com/matheusraz/requisicaoAPIGitJS)
 
 ## Especificações
 - O app foi escrito em Java e para este projeto seguimos os guidelines de desenvolvimento da Google, e por isso utilizamos a arquitetura MVVM, assim como as bibliotecas: Room para persistência de dados, Retrofit2 para consumo de API REST, Dagger2 para injeção de dependências, entre outras. A lista completa de dependências do projeto pode ser visto no [build.gradle](https://github.com/JoaoPauloLins/IF1001-GithubResearcher/blob/master/app/build.gradle).
