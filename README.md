@@ -6,6 +6,7 @@ Um app de pesquisa de repositórios do GitHub.
 
 ## Sobre o app
 - Neste aplicativo, que usando o GitHub REST API v3 como base, você pode pesquisar por repositórios públicos do GitHub, assim como criar listas de repositórios e ter acesso rápido a informações de seus repositórios também.
+- [Vídeo demonstrando principais funcionalidades](https://youtu.be/K8KaUbvNuMY)
 - [API made by us that communicates with Github REST API v3](https://github.com/matheusraz/requisicaoAPIGitJS)
 
 ## Especificações
