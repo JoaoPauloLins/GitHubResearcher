@@ -11,10 +11,12 @@ Um app de pesquisa de repositórios do GitHub.
 - O app foi escrito em Java e para este projeto seguimos os guidelines de desenvolvimento da Google, e por isso utilizamos a arquitetura MVVM, assim como as bibliotecas: Room para persistência de dados, Retrofit2 para consumo de API REST, Dagger2 para injeção de dependências, entre outras. A lista completa de dependências do projeto pode ser visto no [build.gradle](https://github.com/JoaoPauloLins/IF1001-GithubResearcher/blob/master/app/build.gradle).
 
 ## Arquitetura
-![Na arquitetura do projeto mostrado acima temos a seguinte configuração:](https://photos.google.com/share/AF1QipM8SxLxkhk-YYT_jezLPaEbedJBck0uqNQL-Ijom8-2ZaE0tAWTbJgur-SgazjGZw/photo/AF1QipPTsgPg1r0H42qe7Nonh0q2teyRmh1TOfOn2tw1?key=U1AyWlZUYVlwdGdLVEdLeEpUb1RwM3BaM3VSblZR "ArquiteturaGHR")
 
- 1. VO contém as entidades do projeto
-![voGHR](https://photos.google.com/share/AF1QipN1_IrKZPu6r6rnCqZHt53NbgS6Oz7oouROyxTkk8jmG8h0UawTTtEJ_NRkVbespw/photo/AF1QipOcwwIUZcoYuKDICOtt-VPl9qgYiSYq1bqL0sDO?key=Q0ZZRFlVY1RPeC1yOVdQSDRib1JSeWlxOTlQWldB "voGHR")
+![arquiteturaghr](https://user-images.githubusercontent.com/20371104/42635917-b95c2c9a-85bd-11e8-8d68-7eb5608bb584.PNG)
+
+ 1. VO contém as entidades do projeto:
+ 
+![voghr](https://user-images.githubusercontent.com/20371104/42635960-e399c9e0-85bd-11e8-805f-7306ed3c79be.PNG)
 
 	    @Entity(primaryKeys = "id")  
 	    public class User implements Serializable {  
